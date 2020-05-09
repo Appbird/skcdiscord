@@ -6,13 +6,19 @@ import IFunctionBase from "../Base/IFunctionBase";
 
 let ready:ICommandBase[] = [{
     commandTitle :".",
-    process : (message:Message) => {
-        message.channel.send("OK > \n 3,2,1 GO!>");
-        return true;
+    process : async (message:Message) => {
+        try {
+            await message.channel.send("OK > \n 3,2,1 GO!>");
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+
     }
 }];
 let Ready:IFunctionBase = {
-    functionName: "ICommandBase",
+    functionName: "Ready",
     commands: ready
 }
 export default Ready;

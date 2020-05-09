@@ -10,6 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "@types/mocha": "^7.0.2",
+    "discord.js": "^12.2.0",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "expect": "^26.0.1",
+    "mocha": "^7.1.2",
+    "supertest": "^4.0.2"
   }
 }

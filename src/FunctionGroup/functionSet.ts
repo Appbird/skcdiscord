@@ -4,6 +4,6 @@ import IFunctionBase from "../Base/IFunctionBase";
 import Ready from "./Ready";
 
 const functionSet: IFunctionBase[] = [
-    Ready,
+    Ready
 ]
 export default functionSet;

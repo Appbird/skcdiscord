@@ -1,8 +1,9 @@
 "use strict";
 
 import { Message } from "discord.js";
+import CommandProcess from "./CommandProcess";
 
 export default interface ICommandBase {
     commandTitle:string;
-    process(message:Message):boolean;
+    process:CommandProcess;
 }
