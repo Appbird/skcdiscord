@@ -2,10 +2,11 @@
 
 import ICommandBase from "./ICommandBase";
 import IReactBase from "./IReactBase";
+import { ClientEvents } from "discord.js";
 
 export default interface IFunctionBase {
-    commands?:ICommandBase[];
+    commands:ICommandBase[];
     //特定イベントが発生したときに実行されるプロセス。
-    receive?:IReactBase[];
+    reacts:IReactBase<keyof ClientEvents>[];
     functionName:string;
 }

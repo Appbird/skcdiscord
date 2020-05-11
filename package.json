@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/lodash": "^4.14.150",
     "@types/mocha": "^7.0.2",
     "discord.js": "^12.2.0",
+    "lodash": "^4.17.15",
     "typescript": "^3.8.3"
   },
   "devDependencies": {

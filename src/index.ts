@@ -1,14 +1,15 @@
-import {Client, Message} from "discord.js";
-import proceedCmd from "./helper/cmdExecutor";
+import {Client} from "discord.js";
+import allOfReact from "./helper/reactToEvents";
+import standardData from "./Data/standardData";
 
 const client = new Client();
-client.on("message", msgEvent);
 
-
-function msgEvent(msg:Message):void{
-    if (msg.channel.id === "708691948382453760" && 
-        msg.content[0]===">"){
-            proceedCmd(msg);
-            return;
+for (const reacts of allOfReact){
+    client.on(reacts.eventType, (...args)=>{
+        for (const func of reacts.processes){
+            func(...args);
         }
+    }
+    )
 }
+client.login(standardData.tokenId);

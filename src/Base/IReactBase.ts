@@ -1,8 +1,8 @@
 "use strict";
-import {Message} from "discord.js";
-import CommandProcess from "./CommandProcess";
+import {ClientEvents} from "discord.js";
 
-export default interface IReceiveBase{
-    eventType:string;
-    process:CommandProcess;
+export default interface IReactBase<K extends keyof ClientEvents>{
+    eventType:K;
+    process(...args:ClientEvents[K]): void;
 }
+

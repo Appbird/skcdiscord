@@ -3,8 +3,10 @@
 import ICommandBase from "../Base/ICommandBase";
 import { Message } from "discord.js";
 import IFunctionBase from "../Base/IFunctionBase";
+import IReactBase from "../Base/IReactBase";
+import {ClientEvents} from "discord.js";
 
-let ready:ICommandBase[] = [{
+let cmd:ICommandBase[] = [{
     commandTitle :".",
     process : async (message:Message) => {
         try {
@@ -17,8 +19,19 @@ let ready:ICommandBase[] = [{
 
     }
 }];
+let rt:IReactBase<"message"> = {
+    eventType: "message",
+    process: msg => {
+        if(msg.content === "ready")msg.channel.send("REACT >")
+    }
+};
+
+
 let Ready:IFunctionBase = {
-    functionName: "Ready",
-    commands: ready
-}
+    functionName: "ready",
+    commands: cmd,
+    reacts: [rt]
+};
 export default Ready;
+
+
