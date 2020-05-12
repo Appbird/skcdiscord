@@ -14,7 +14,20 @@
                 "reveal": "always"
             },
             // Use the standard MS compiler pattern to detect errors, warnings and infos
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "TypeScript-test-check",
+            "type": "shell",
+            "command": "node ./build/src/test/add.test.js",
+            "args": [],
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "always"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$tsc"
         }
     ]
 }

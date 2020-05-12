@@ -5,14 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
 var lodash_1 = __importDefault(require("lodash"));
+var helperAboutError_1 = __importDefault(require("./helperAboutError"));
 function executeCmd(msg) {
-    var msgLow = msg.content.toLowerCase();
-    var TokenArray = msgLow.slice(1).split(/\s+/g);
-    if (TokenArray.length < 2) {
-        msg.channel.send("error > メッセージの内、機能名かコマンド名のどちらかが欠けています。");
+    var tokenArray = devideIntoTokens(msg.content);
+    if (tokenArray.length < 2) {
+        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "メッセージの内、機能名かコマンド名のどちらかが欠けています。");
         return;
     }
-    var usedFunctionIndex = lodash_1.default.findIndex(functionSet_1.default, function (func) { return TokenArray[0] === func.functionName; });
+    var usedFunctionIndex = lodash_1.default.findIndex(functionSet_1.default, function (func) { return tokenArray[0] === func.functionName; });
     //CTODO:ここではfindメソッドを使えるはずだが、何故か使えなかった。
     //lodashパッケージを使うことで解決。とても便利。
     if (usedFunctionIndex === -1) {
@@ -21,15 +21,24 @@ function executeCmd(msg) {
             var ele = functionSet_2[_i];
             functionNameList += "- " + ele.functionName + "\n";
         }
-        var sent = "error > 指定された機能は存在しません。\n存在するのは以下の機能です。\n" + functionNameList;
-        msg.channel.send(sent);
+        var sent = "\u6307\u5B9A\u3055\u308C\u305F\u6A5F\u80FD\u306F\u5B58\u5728\u3057\u307E\u305B\u3093\u3002\n                    \u5B58\u5728\u3059\u308B\u306E\u306F\u4EE5\u4E0B\u306E\u6A5F\u80FD\u3067\u3059\u3002\n                    " + functionNameList;
+        helperAboutError_1.default.throwErrorToDiscord(msg.channel, sent);
         return;
     }
-    var selectedCmdIndex = lodash_1.default.findIndex(functionSet_1.default[usedFunctionIndex].commands, function (cmd) { return cmd.commandTitle === TokenArray[1]; });
+    var selectedCmdIndex = lodash_1.default.findIndex(functionSet_1.default[usedFunctionIndex].commands, function (cmd) { return cmd.commandTitle === tokenArray[1]; });
     if (selectedCmdIndex === -1) {
-        msg.channel.send("error > そのコマンドは、指定された機能中に存在しません。");
+        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "そのコマンドは、指定された機能中に存在しません。");
         return;
     }
-    functionSet_1.default[usedFunctionIndex].commands[selectedCmdIndex].process(msg, TokenArray);
+    functionSet_1.default[usedFunctionIndex].commands[selectedCmdIndex].process(msg, tokenArray);
 }
 exports.default = executeCmd;
+function devideIntoTokens(str) {
+    var tokenArray = str.slice(1).split(/\s+/g);
+    if (tokenArray.length < 2)
+        return [];
+    tokenArray[0] = tokenArray[0].toLowerCase();
+    tokenArray[1] = tokenArray[1].toLowerCase();
+    return tokenArray;
+}
+exports.devideIntoTokens = devideIntoTokens;

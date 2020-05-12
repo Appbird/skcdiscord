@@ -1,0 +1,43 @@
+import helperAboutError from "./helperAboutError";
+import _ from "lodash";
+import { Message, TextChannel, DMChannel, NewsChannel } from "discord.js";
+
+
+interface ICmdFlag{
+    /** @property フラグ名 */
+    flagTitle : string;
+    /** @property このフラグを操作するために、コマンドでフラグとして入力すべき文字列 */
+    cmdForFlag : string;
+    /**@property 状態 */
+    state: boolean;
+}
+
+export class cmdFlagManager{
+    /** @property コマンドに用意された存在するフラグの一覧。*/
+    public definedCmdFlags:ICmdFlag[] = [];
+    /**
+     * @param cmdFlags コマンドとして入力された、フラグを表す文字列配列
+     * @param channel エラーが起こった際にメッセージを送るチャンネル
+     * @return 反応した全てのフラグ
+     */
+    public turnOn(cmdFlagsChar:string[],channel:TextChannel|DMChannel|NewsChannel):string[]{
+        let result:string[] = [];
+        for(const cmdFlag of cmdFlagsChar){
+            let judgedCmdFlag = cmdFlag.toLowerCase();
+            if (judgedCmdFlag[0] !== "-"){
+                helperAboutError.throwErrorToDiscord(channel,
+                    `このコマンドはこれほど多くの引数は取りません。`);
+                continue;
+            }
+            let definedCmdFlagIndex = _.findIndex(this.definedCmdFlags,element => element.cmdForFlag === judgedCmdFlag);
+            if (definedCmdFlagIndex === -1){
+                helperAboutError.throwErrorToDiscord(channel,
+                    `フラグ"${cmdFlag}"は存在しません。このフラグを無視して処理を続行します。`);
+                continue;
+            }
+            this.definedCmdFlags[definedCmdFlagIndex].state = !this.definedCmdFlags[definedCmdFlagIndex].state;
+            result.push(cmdFlag);
+        }
+        return result;
+    }
+}
