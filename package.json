@@ -18,6 +18,7 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
+    "@types/node": "^13.13.5",
     "expect": "^26.0.1",
     "mocha": "^7.1.2",
     "supertest": "^4.0.2"

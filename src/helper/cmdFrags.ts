@@ -3,9 +3,13 @@ import _ from "lodash";
 import { Message, TextChannel, DMChannel, NewsChannel } from "discord.js";
 
 
-interface ICmdFlag{
+export interface ICmdFlag{
     /** @property フラグ名 */
     flagTitle : string;
+    /** @property フラグが立つ時の説明 */
+    flagOnDescription: string;
+    /** @property フラグが立たない時の説明 */
+    flagOffDescription: string;
     /** @property このフラグを操作するために、コマンドでフラグとして入力すべき文字列 */
     cmdForFlag : string;
     /**@property 状態 */

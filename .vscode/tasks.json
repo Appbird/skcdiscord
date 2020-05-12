@@ -17,9 +17,9 @@
             "problemMatcher": "$tsc"
         },
         {
-            "label": "TypeScript-test-check",
+            "label": "TypeScript-start",
             "type": "shell",
-            "command": "node ./build/src/test/add.test.js",
+            "command": "node ./build/src/index.js",
             "args": [],
             "group": "build",
             "presentation": {

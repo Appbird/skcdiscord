@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.cmdFlagManager = void 0;
 var helperAboutError_1 = __importDefault(require("./helperAboutError"));
 var lodash_1 = __importDefault(require("lodash"));
 var cmdFlagManager = /** @class */ (function () {

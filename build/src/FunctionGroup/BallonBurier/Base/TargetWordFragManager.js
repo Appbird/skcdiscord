@@ -21,22 +21,20 @@ var TargetWordFragManager = /** @class */ (function (_super) {
         _this.definedCmdFlags = [
             {
                 flagTitle: "emphasizeSpace",
+                flagOnDescription: "判別するにあたってメッセージのスペースの有無を重視する。",
+                flagOffDescription: "判別するにあたってメッセージのスペースの有無を無視する。",
                 cmdForFlag: "-es", state: false
             },
             {
-                flagTitle: "emphasizeUnrelatedInscription",
-                cmdForFlag: "-eui", state: false
-            },
-            {
-                flagTitle: "emphasizeProlongedSoundMark",
-                cmdForFlag: "-epsm", state: false
-            },
-            {
                 flagTitle: "emphasizeDistinctionBetweenHiraKata",
+                flagOnDescription: "ひらがなカタカナの区別を重視する。",
+                flagOffDescription: "ひらがなカタカナの区別を無視する。",
                 cmdForFlag: "-edbhk", state: false
             },
             {
                 flagTitle: "emphasizeDistinctionAlpBetweenLargeSmall",
+                flagOnDescription: "アルファベットの大小の区別を重視する。",
+                flagOffDescription: "アルファベットの大小の区別を無視する。",
                 cmdForFlag: "-edabls", state: false
             }
         ];
@@ -45,3 +43,7 @@ var TargetWordFragManager = /** @class */ (function (_super) {
     return TargetWordFragManager;
 }(cmdFrags_1.cmdFlagManager));
 exports.default = TargetWordFragManager;
+/*
+    flagOnDescription:"",
+    flagOffDescription:"",
+*/ 

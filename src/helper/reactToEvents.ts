@@ -12,7 +12,7 @@ import standardData from "../Data/standardData";
     let allOfReact:IReactProcessBox<keyof ClientEvents>[] = [
         {
             eventType:"message",
-            processes:[(msg:Message) => {if (msg.channel.id === standardData.cmdChannnelId && msg.content[0]===">") executeCmd(msg);}]
+            processes:[(msg:Message) => {if ((msg.channel.id === standardData.cmdChannnelId[0] || msg.channel.id === standardData.cmdChannnelId[1] )&& msg.content[0]===">") executeCmd(msg);}]
             /* コマンドは"message"Reactとして設定する。
             ちなみに、TypeScriptが双変性を禁ずる理由はここにある。
             このとき、配列からこの要素にアクセスしていても、

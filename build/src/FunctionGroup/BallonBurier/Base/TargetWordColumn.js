@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TargetWordColumn = void 0;
 var TargetWordColumn = /** @class */ (function () {
     function TargetWordColumn(registeredWord) {
         this.usedWordForJudging = "";
