@@ -15,4 +15,4 @@ for (const reacts of allOfReact){
     }
     )
 }
-client.login(standardData.token);
+client.login(process.env.BOT_TOKEN);

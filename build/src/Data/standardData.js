@@ -22,7 +22,6 @@ var StandardDataOwner = /** @class */ (function () {
         var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("standard.json");
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
-        this.token = data.token;
     }
     StandardDataOwner.prototype.findCmdChannelId = function (channelId) {
         return this.cmdChannelId.findIndex(function (registeredCh) { return registeredCh === channelId; }) !== -1;
@@ -46,7 +45,6 @@ var StandardDataOwner = /** @class */ (function () {
         helperAboutFiles_1.default.saveJSONDataInDataBase("standard.json", {
             "cmdChannelId": this.cmdChannelId,
             "botId": this.botId,
-            "token": this.token
         });
     };
     return StandardDataOwner;

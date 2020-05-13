@@ -15,7 +15,6 @@ class StandardDataOwner{
         const data = helperAboutFiles.loadJSONFromlFileInDataBase("standard.json");
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
-        this.token = data.token;
     }
     public findCmdChannelId(channelId:string){
         return this.cmdChannelId.findIndex(registeredCh => registeredCh === channelId) !== -1;
@@ -39,11 +38,9 @@ class StandardDataOwner{
         {
             "cmdChannelId":this.cmdChannelId,
             "botId": this.botId,
-            "token": this.token
         })
     }
     cmdChannelId:string[];
-    token:string;
     botId:string;
 }
 const standardData = new StandardDataOwner();
