@@ -1,8 +1,4 @@
 import helperAboutFiles from "../helper/programHelperFunctions/helperAboutFiles";
-import helperAboutError from "../helper/programHelperFunctions/helperAboutError";
-import { TextChannel, DMChannel, NewsChannel } from "discord.js";
-import client from "../client";
-import { embedMessageMaker } from "../helper/embedMessageMaker";
 
 export enum addCmdChannelIdState{
     success,
@@ -19,7 +15,7 @@ class StandardDataOwner{
         const data = helperAboutFiles.loadJSONFromlFileInDataBase("standard.json");
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
-        this.tokenId = data.token
+        this.token = data.token;
     }
     public findCmdChannelId(channelId:string){
         return this.cmdChannelId.findIndex(registeredCh => registeredCh === channelId) !== -1;
@@ -33,22 +29,21 @@ class StandardDataOwner{
     }
     public removeCmdChannelId(removedId:string):removeCmdChannelIdState{
         const lengthBeforeProcess = this.cmdChannelId.length;
-        this.cmdChannelId = this.cmdChannelId.filter(element => element === removedId);
-        const channelSentMsg = client.channels.cache.get(this.cmdChannelId[0]);
-        if (channelSentMsg === undefined) return removeCmdChannelIdState.notChannelFound;
+        this.cmdChannelId = this.cmdChannelId.filter(element => element !== removedId);
+        if　(lengthBeforeProcess === this.cmdChannelId.length) return removeCmdChannelIdState.notChannelFound;
         this._save();
         return removeCmdChannelIdState.success;
     }
     private _save(){
         helperAboutFiles.saveJSONDataInDataBase("standard.json",
         {
-            "cmdChannel":this.cmdChannelId,
+            "cmdChannelId":this.cmdChannelId,
             "botId": this.botId,
-            "tokenId": this.tokenId
+            "token": this.token
         })
     }
     cmdChannelId:string[];
-    tokenId:string;
+    token:string;
     botId:string;
 }
 const standardData = new StandardDataOwner();

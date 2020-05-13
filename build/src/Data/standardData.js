@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeCmdChannelIdState = exports.addCmdChannelIdState = void 0;
 var helperAboutFiles_1 = __importDefault(require("../helper/programHelperFunctions/helperAboutFiles"));
-var client_1 = __importDefault(require("../client"));
 var addCmdChannelIdState;
 (function (addCmdChannelIdState) {
     addCmdChannelIdState[addCmdChannelIdState["success"] = 0] = "success";
@@ -23,7 +22,7 @@ var StandardDataOwner = /** @class */ (function () {
         var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("standard.json");
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
-        this.tokenId = data.token;
+        this.token = data.token;
     }
     StandardDataOwner.prototype.findCmdChannelId = function (channelId) {
         return this.cmdChannelId.findIndex(function (registeredCh) { return registeredCh === channelId; }) !== -1;
@@ -37,18 +36,17 @@ var StandardDataOwner = /** @class */ (function () {
     };
     StandardDataOwner.prototype.removeCmdChannelId = function (removedId) {
         var lengthBeforeProcess = this.cmdChannelId.length;
-        this.cmdChannelId = this.cmdChannelId.filter(function (element) { return element === removedId; });
-        var channelSentMsg = client_1.default.channels.cache.get(this.cmdChannelId[0]);
-        if (channelSentMsg === undefined)
+        this.cmdChannelId = this.cmdChannelId.filter(function (element) { return element !== removedId; });
+        if (lengthBeforeProcess === this.cmdChannelId.length)
             return removeCmdChannelIdState.notChannelFound;
         this._save();
         return removeCmdChannelIdState.success;
     };
     StandardDataOwner.prototype._save = function () {
         helperAboutFiles_1.default.saveJSONDataInDataBase("standard.json", {
-            "cmdChannel": this.cmdChannelId,
+            "cmdChannelId": this.cmdChannelId,
             "botId": this.botId,
-            "tokenId": this.tokenId
+            "token": this.token
         });
     };
     return StandardDataOwner;

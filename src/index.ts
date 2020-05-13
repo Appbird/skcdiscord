@@ -15,4 +15,4 @@ for (const reacts of allOfReact){
     }
     )
 }
-client.login(standardData.tokenId);
+client.login(standardData.token);

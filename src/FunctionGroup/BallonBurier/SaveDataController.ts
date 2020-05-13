@@ -1,6 +1,4 @@
 import { TargetWordColumn } from "./Base/TargetWordColumn";
-import fs from "fs";
-import logger from "../../test/logger";
 import helperAboutFiles from "../../helper/programHelperFunctions/helperAboutFiles";
 
 

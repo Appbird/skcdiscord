@@ -27,5 +27,5 @@ for (var _i = 0, allOfReact_1 = reactToEvents_1.default; _i < allOfReact_1.lengt
     var reacts = allOfReact_1[_i];
     _loop_1(reacts);
 }
-client_1.default.login(standardData_1.default.tokenId);
+client_1.default.login(standardData_1.default.token);
 //# sourceMappingURL=index.js.map

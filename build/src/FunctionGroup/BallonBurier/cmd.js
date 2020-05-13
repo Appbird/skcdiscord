@@ -33,7 +33,7 @@ function add(msg, tokens) {
             inline: false
         };
     });
-    msg.channel.send(embedMessageMaker_1.embedMessageMaker(":white_check_mark: \u30EF\u30FC\u30C9\u300C" + addedColumn.word + "\u300D\u304C\u30EA\u30B9\u30C8\u306B\u8FFD\u52A0\u3055\u308C\u307E\u3057\u305F\u3002", BallonBurier_1.default.realFuncName, "以下の属性が適用されています。", listOfFlags, addedColumn.registeredTimeStamp, embedMessageMaker_1.embedMsgState.Success));
+    msg.channel.send(embedMessageMaker_1.embedMessageMaker("\u30EF\u30FC\u30C9\u300C" + addedColumn.word + "\u300D\u304C\u30EA\u30B9\u30C8\u306B\u8FFD\u52A0\u3055\u308C\u307E\u3057\u305F\u3002", BallonBurier_1.default.realFuncName, "以下の属性が適用されています。", listOfFlags, addedColumn.registeredTimeStamp, embedMessageMaker_1.embedMsgState.Success));
 }
 exports.add = add;
 function converseWordsFollowingRules(str, flagManger) {
@@ -48,12 +48,13 @@ function converseWordsFollowingRules(str, flagManger) {
 function remove(msg, tokens) {
     var deletedWord = tokens[2];
     var savedData = SaveDataController_1.default.load();
-    if (lodash_1.default.findIndex(savedData, function (ele) { return ele.word !== deletedWord; }) === -1 || deletedWord === "" || deletedWord === undefined) {
+    var indexWhereFound = lodash_1.default.findIndex(savedData, function (ele) { return ele.word === deletedWord; });
+    if (indexWhereFound === -1 || deletedWord === "" || deletedWord === undefined) {
         helperAboutError_1.default.throwErrorToDiscord(msg.channel, "一致する単語が見つかりません。");
         return;
     }
-    msg.channel.send(embedMessageMaker_1.embedMessageMaker(":white_check_mark: \u30EF\u30FC\u30C9" + deletedWord + "\u3092\u30EA\u30B9\u30C8\u304B\u3089\u9664\u5916\u3057\u307E\u3057\u305F\u3002", BallonBurier_1.default.realFuncName, "", [], new Date(), embedMessageMaker_1.embedMsgState.Normal));
-    SaveDataController_1.default.save(savedData.filter(function (ele) { return ele.usedWordForJudging !== deletedWord; }));
+    msg.channel.send(embedMessageMaker_1.embedMessageMaker("\u30EF\u30FC\u30C9" + deletedWord + "\u3092\u30EA\u30B9\u30C8\u304B\u3089\u9664\u5916\u3057\u307E\u3057\u305F\u3002", BallonBurier_1.default.realFuncName, "", [], new Date(), embedMessageMaker_1.embedMsgState.Normal));
+    SaveDataController_1.default.save(savedData.filter(function (ele, index) { return index !== indexWhereFound; }));
 }
 exports.remove = remove;
 function show(msg) {
@@ -65,7 +66,7 @@ function show(msg) {
             inline: false
         };
     });
-    msg.channel.send(embedMessageMaker_1.embedMessageMaker(":information_source: 対象リストとそのワードに関するフラグ一覧", BallonBurier_1.default.realFuncName, "", listOfFlags, new Date(), embedMessageMaker_1.embedMsgState.Normal));
+    msg.channel.send(embedMessageMaker_1.embedMessageMaker("対象リストとそのワードに関するフラグ一覧", BallonBurier_1.default.realFuncName, "", listOfFlags, new Date(), embedMessageMaker_1.embedMsgState.Normal));
 }
 exports.show = show;
 //# sourceMappingURL=cmd.js.map

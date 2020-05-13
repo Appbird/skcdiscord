@@ -37,7 +37,7 @@ export function add(msg: Message, tokens: string[]): void {
     }});
 
     msg.channel.send(embedMessageMaker(
-        `:white_check_mark: ワード「${addedColumn.word}」がリストに追加されました。`,
+        `ワード「${addedColumn.word}」がリストに追加されました。`,
         BallonBurier.realFuncName,
         "以下の属性が適用されています。",
         listOfFlags,
@@ -57,20 +57,21 @@ function converseWordsFollowingRules(str:string,flagManger:TargetWordFrags){
 export function remove(msg:Message, tokens:string[]):void {
     let deletedWord = tokens[2];
     let savedData = SaveDataController.load();
-    
-    if (_.findIndex(savedData,ele => ele.word !== deletedWord) === -1 || deletedWord === "" || deletedWord === undefined) {
+
+    let indexWhereFound =_.findIndex(savedData,ele => ele.word === deletedWord)
+    if (indexWhereFound === -1 || deletedWord === "" || deletedWord === undefined) {
         helperAboutError.throwErrorToDiscord(msg.channel, "一致する単語が見つかりません。");
         return;
     }
     msg.channel.send(embedMessageMaker(
-        `:white_check_mark: ワード${deletedWord}をリストから除外しました。`,
+        `ワード${deletedWord}をリストから除外しました。`,
         BallonBurier.realFuncName,
         "",
         [],
         new Date(),
         embedMsgState.Normal
     ));
-    SaveDataController.save(savedData.filter(ele => ele.usedWordForJudging !== deletedWord));
+    SaveDataController.save(savedData.filter((ele,index) => index !== indexWhereFound));
 
 }
 export function show(msg:Message){
@@ -82,7 +83,7 @@ export function show(msg:Message){
         inline: false
     }});
     msg.channel.send(embedMessageMaker(
-        ":information_source: 対象リストとそのワードに関するフラグ一覧",
+        "対象リストとそのワードに関するフラグ一覧",
         BallonBurier.realFuncName,
         "",
         listOfFlags,

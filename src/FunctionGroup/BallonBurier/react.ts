@@ -10,14 +10,12 @@ import BallonBurier from "./BallonBurier";
 export default function buryWord(msg:Message){
     const targetWordList = SaveDataController.load();
     let foundWord = _detectWordInMsg(msg.content,targetWordList);
-
-    if (standardData.findCmdChannelId(msg.channel.id) && foundWord === "") return;
+    if (standardData.findCmdChannelId(msg.channel.id) || foundWord === "") return;
 
     msg.delete({reason:`${BallonBurier.realFuncName} > 対象となるワードが含まれていたため。`});
-    let deleteCountIndex = _.findIndex(targetWordList,{word:foundWord});
-
+    const deleteCountIndex = _.findIndex(targetWordList,ele => ele.word === foundWord);
     targetWordList[deleteCountIndex].timeOfBuried++;
-
+    SaveDataController.save(targetWordList);
     msg.client.channels.cache.get(standardData.cmdChannelId[0])?.send(embedMessageMaker(
             "メッセージが埋め立てられてしまいました…。",
             BallonBurier.realFuncName,
@@ -25,7 +23,7 @@ export default function buryWord(msg:Message){
             [   {name:"原因",value:foundWord,inline:true},
                 {name:"今まで埋め立てられた回数",value:targetWordList[deleteCountIndex].timeOfBuried.toString(),inline:true}],
             new Date(),
-            embedMsgState.Success
+            embedMsgState.Normal
         )
     );
 }

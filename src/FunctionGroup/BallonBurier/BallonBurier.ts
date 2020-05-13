@@ -10,10 +10,7 @@ let cmd:ICommandBase[] = [
         commandTitle :"add",
         allowedFlags:(new TargetWordFragManager()).definedCmdFlags,
         numberOfTokenRequired:3,
-        description:`対象リストに\`[文字列A]\`を登録する。この文字列に半角空欄を含めることはできない。
-                    また、フラグ(\`-eS\`など)を明記することで、
-                    メッセージに対象が含まれているか調べる走査について追加設定を行うことが出来る。
-                    ちなみに偶数回同じフラグを明記すると無効になる。`,
+        description:`対象リストに\`[文字列A]\`を登録する。`,
         argsForDescription: ["[文字列A]","[フラグ]"],
         process : add
     },

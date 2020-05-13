@@ -1,7 +1,6 @@
 "use strict";
 import functionSet from "../FunctionGroup/functionSet";
 import { ClientEvents, Message} from "discord.js";
-import ICommandBase from "../Base/ICommandBase";
 import _ from "lodash";
 import executeCmd from "./cmdExecutor";
 import IReactBase from "../Base/IReactBase";

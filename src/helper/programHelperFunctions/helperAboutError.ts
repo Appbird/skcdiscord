@@ -5,7 +5,7 @@ let helperAboutError = {
     throwErrorToDiscord(targetChannel:TextChannel|DMChannel|NewsChannel,content:string,description?:string,fields?:IEmbedMessageField[]){
 
             targetChannel.send(embedMessageMaker(
-                `:exclamation: ${content}`,
+                `${content}`,
                 "ErrorRepoter",
                 (description!==undefined)? description : "",
                 (fields!==undefined)? fields : [],

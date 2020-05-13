@@ -12,7 +12,7 @@ export function embedMessageMaker(title:string,authorName:string,description:str
     return {
         embed:{
             color: returnColor(state),
-            title: title,
+            title: `${returnIcon(state)}${title}`,
             author:{
                 name: authorName
             },
@@ -28,5 +28,12 @@ function returnColor(state:embedMsgState){
         case embedMsgState.Success: return 0x64e35f;
         case embedMsgState.Normal: return 0x4297ff;
         case embedMsgState.Error: return 0xff4f42;
+    }
+}
+function returnIcon(state:embedMsgState){
+    switch(state){
+        case embedMsgState.Success: return ":white_check_mark:";
+        case embedMsgState.Normal: return ":information_source:";
+        case embedMsgState.Error: return ":exclamation:";
     }
 }

@@ -3,13 +3,13 @@ import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker
 import IFunctionBase from "../../Base/IFunctionBase";
 import standardData, { addCmdChannelIdState, removeCmdChannelIdState } from "../../Data/standardData";
 import client from "../../client";
+import IReactBase from "../../Base/IReactBase";
 
 const cmd:ICommandBase[] = [
     {commandTitle:"add",
     numberOfTokenRequired:2,
     argsForDescription:[],
     process: (msg) => {
-        if (standardData.addCmdChannelId(msg.channel.id) === addCmdChannelIdState.alreadyadded){
             msg.channel.send(
                 embedMessageMaker(
                     `このチャンネルはすでに登録されています`,
@@ -22,17 +22,8 @@ const cmd:ICommandBase[] = [
             )
             return;
         }
-        msg.channel.send(
-        embedMessageMaker(
-            `このチャンネルをコマンドチャンネルとして登録しました。`,
-            CmdChannelManager.realFuncName,
-            `今後はこのチャンネルにもコマンドを打ち込むことができます。`,
-            [],
-            new Date(),
-            embedMsgState.Success
-        ))
-    },
-        description: "コマンドを受け付けるチャンネルを増やします。\n対象となるのはこのコマンドが打ち込まれたチャンネルです。",
+    ,
+        description: "コマンドを受け付けるチャンネルを増やします。\n対象となるのはこのコマンドが打ち込まれたチャンネルです。\n`>helloworld`でも反応します。",
 
     },
     {
@@ -40,12 +31,11 @@ const cmd:ICommandBase[] = [
     numberOfTokenRequired:2,
     argsForDescription:[],
     process: (msg) => {
-        if (standardData.removeCmdChannelId(msg.channel.id) === removeCmdChannelIdState.notChannelFound)return;
         msg.channel.send(
         embedMessageMaker(
-            `このチャンネルをコマンドチャンネルとして登録しました。`,
+            `このチャンネルをコマンドチャンネルから外しました。`,
             CmdChannelManager.realFuncName,
-            `今後はこのチャンネルにもコマンドを打ち込むことができます。`,
+            `今後はこのチャンネルはコマンドを受け付けません。`,
             [],
             new Date(),
             embedMsgState.Success
@@ -74,23 +64,54 @@ const cmd:ICommandBase[] = [
                             value: channelName,
                             inline: false
                         }
-                        }
+                        }　
                     ),
                     new Date(),
-                    embedMsgState.Success
+                    embedMsgState.Normal
                 ))
-            
+
         },
             description: "コマンドを受け付けるチャンネルの一覧を確認します。",
-    
+
         },
 
 ]
+
+const rt_m:IReactBase<"message"> = 
+    {
+        
+        eventType:"message",
+        reactName:"add",
+        process:(msg) => {
+            if (standardData.findCmdChannelId(msg.channel.id)) return;
+            
+            const cmd = msg.content.toLowerCase().replace(/\s+/g,"");
+            if (cmd !== ">cmdcmadd" && cmd !== ">helloworld") return;
+            standardData.addCmdChannelId(msg.channel.id);
+            msg.channel.send(
+                embedMessageMaker(
+                    `このチャンネルをコマンドチャンネルとして登録しました。`,
+                    CmdChannelManager.realFuncName,
+                    `今後はこのチャンネルにもコマンドを打ち込むことができます。`,
+                    [],
+                    new Date(),
+                    embedMsgState.Success
+                ))
+        }
+    }
+const rt_cD:IReactBase<"channelDelete">={
+    eventType :"channelDelete",
+    reactName : "add",
+    process: (ch) => {
+        standardData.removeCmdChannelId(ch.id)
+    }
+}
+
 const CmdChannelManager:IFunctionBase = {
     functionName: "cmdcm",
     realFuncName: "CmdChannelManager",
-    reacts: [],
+    reacts: [rt_m,rt_cD],
     commands: cmd,
-    description: "コマンドを受け付けるチャンネルを増加する。"
+    description: "コマンドを受け付けるチャンネルを管理します。"
 }
 export default CmdChannelManager;
