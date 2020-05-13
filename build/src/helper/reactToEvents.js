@@ -39,7 +39,7 @@ function recollectReact(reactTable) {
 function classifyEventReact(reactTable, react) {
     var addedColumnIndex = lodash_1.default.findIndex(reactTable, function (element) { return element.eventType === react.eventType; });
     if (addedColumnIndex === -1)
-        addedColumnIndex = reactTable.push({ eventType: react.eventType, processes: [react.process] }) - 1;
+        addedColumnIndex = reactTable.push({ eventType: react.eventType, processes: [] }) - 1;
     reactTable[addedColumnIndex].processes.push(react.process);
 }
 exports.default = allOfReact;

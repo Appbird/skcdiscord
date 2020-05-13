@@ -16,4 +16,4 @@ for (const reacts of allOfReact){
     )
 }
 client.login(process.env.BOT_TOKEN);
-console.log(`logged in as ${client.user?.tag}`);
+console.log(`logged in`);

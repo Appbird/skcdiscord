@@ -50,6 +50,7 @@ function executeCmd(msg) {
         return;
     }
     functionSet_1.default[usedFunctionIndex].commands[selectedCmdIndex].process(msg, tokenArray);
+    console.log("cmd " + msg.content + " has been launched!");
 }
 exports.default = executeCmd;
 function devideIntoTokens(str) {

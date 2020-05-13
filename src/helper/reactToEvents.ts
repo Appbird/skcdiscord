@@ -46,7 +46,7 @@ function recollectReact(reactTable:IReactProcessBox<keyof ClientEvents>[]){
 ***/
 function classifyEventReact<K extends keyof ClientEvents>(reactTable: IReactProcessBox<K>[], react: IReactBase<K>) {
     let addedColumnIndex = _.findIndex(reactTable, element => element.eventType === react.eventType);
-    if (addedColumnIndex === -1) addedColumnIndex = reactTable.push({ eventType: react.eventType, processes: [react.process] }) - 1;
+    if (addedColumnIndex === -1) addedColumnIndex = reactTable.push({ eventType: react.eventType, processes: [] }) - 1;
     reactTable[addedColumnIndex].processes.push(react.process);
 }
 

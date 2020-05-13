@@ -51,7 +51,7 @@ export default function executeCmd(msg:Message):void{
         return;
     }
     functionSet[usedFunctionIndex].commands[selectedCmdIndex].process(msg,tokenArray);
-
+    console.log(`cmd ${msg.content} has been launched!`);
 }
 
 export function devideIntoTokens(str:string){
