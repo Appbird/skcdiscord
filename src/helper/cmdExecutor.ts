@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import functionSet from "../FunctionGroup/functionSet";
 import _ from "lodash";
-import helperAboutError from "./helperAboutError";
+import helperAboutError from "./programHelperFunctions/helperAboutError";
 import { embedMessageMaker } from "./embedMessageMaker";
 import { giveArgsOfHelpEmbedMsgAboutFunction, giveArgsOfHelpEmbedMsgAboutCmd } from "./giveArgsOfHelpEmbedMsg";
 

@@ -45,3 +45,4 @@ var BallonBurier = {
     description: "特定の語句を含むメッセージがDiscordのサーバーに投稿されたとき、このメッセージを削除する。"
 };
 exports.default = BallonBurier;
+//# sourceMappingURL=BallonBurier.js.map

@@ -1,5 +1,5 @@
 import {  TextChannel, DMChannel, NewsChannel } from "discord.js";
-import { embedMsgState, embedMessageMaker, IEmbedMessageField } from "./embedMessageMaker";
+import { embedMsgState, embedMessageMaker, IEmbedMessageField } from "../embedMessageMaker";
 
 let helperAboutError = {
     throwErrorToDiscord(targetChannel:TextChannel|DMChannel|NewsChannel,content:string,description?:string,fields?:IEmbedMessageField[]){

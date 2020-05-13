@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.devideIntoTokens = void 0;
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
 var lodash_1 = __importDefault(require("lodash"));
-var helperAboutError_1 = __importDefault(require("./helperAboutError"));
+var helperAboutError_1 = __importDefault(require("./programHelperFunctions/helperAboutError"));
 var embedMessageMaker_1 = require("./embedMessageMaker");
 var giveArgsOfHelpEmbedMsg_1 = require("./giveArgsOfHelpEmbedMsg");
 function executeCmd(msg) {
@@ -61,3 +61,4 @@ function devideIntoTokens(str) {
     return tokenArray;
 }
 exports.devideIntoTokens = devideIntoTokens;
+//# sourceMappingURL=cmdExecutor.js.map

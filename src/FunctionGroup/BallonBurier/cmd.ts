@@ -1,7 +1,7 @@
 import { Message} from "discord.js";
 import _ from "lodash";
 
-import helperAboutError from "../../helper/helperAboutError";
+import helperAboutError from "../../helper/programHelperFunctions/helperAboutError";
 import { TargetWordColumn } from "./Base/TargetWordColumn";
 import SaveDataController from "./SaveDataController";
 import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
@@ -69,7 +69,6 @@ export function remove(msg:Message, tokens:string[]):void {
         [],
         new Date(),
         embedMsgState.Normal
-        
     ));
     SaveDataController.save(savedData.filter(ele => ele.usedWordForJudging !== deletedWord));
 

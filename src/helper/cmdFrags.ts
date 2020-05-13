@@ -1,4 +1,4 @@
-import helperAboutError from "./helperAboutError";
+import helperAboutError from "./programHelperFunctions/helperAboutError";
 import _ from "lodash";
 import { Message, TextChannel, DMChannel, NewsChannel } from "discord.js";
 

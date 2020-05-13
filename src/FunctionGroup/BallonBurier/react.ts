@@ -6,19 +6,19 @@ import _ from "lodash";
 import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
 import standardData from "../../Data/standardData";
 import BallonBurier from "./BallonBurier";
-import logger from "../../test/logger";
 
 export default function buryWord(msg:Message){
     const targetWordList = SaveDataController.load();
     let foundWord = _detectWordInMsg(msg.content,targetWordList);
 
-    if (foundWord === "") return;
-    msg.delete();
+    if (standardData.findCmdChannelId(msg.channel.id) && foundWord === "") return;
+
+    msg.delete({reason:`${BallonBurier.realFuncName} > 対象となるワードが含まれていたため。`});
     let deleteCountIndex = _.findIndex(targetWordList,{word:foundWord});
 
     targetWordList[deleteCountIndex].timeOfBuried++;
 
-    msg.client.channels.cache.get(standardData.cmdChannnelId[0])?.send(embedMessageMaker(
+    msg.client.channels.cache.get(standardData.cmdChannelId[0])?.send(embedMessageMaker(
             "メッセージが埋め立てられてしまいました…。",
             BallonBurier.realFuncName,
             `__**${msg.author.username}**__ > ${msg.content}`,
@@ -36,6 +36,8 @@ export default function buryWord(msg:Message){
  */
 function _detectWordInMsg(detectedStr:string,targetWordList:TargetWordColumn[]):string{
     const converseList = _.entries(fragConverses);
+    if (targetWordList === undefined) return "";
+
     for (const aListedWord of targetWordList){
         if (detectedStr.indexOf(aListedWord.usedWordForJudging) !== -1) return aListedWord.word;
     }

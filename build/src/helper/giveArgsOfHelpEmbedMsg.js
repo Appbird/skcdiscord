@@ -29,3 +29,4 @@ function giveArgsOfHelpEmbedMsgAboutCmd(functionIndex) {
     return [(functionSet_1.default[functionIndex].realFuncName) + "\u306E\u30B3\u30DE\u30F3\u30C9", "Helper", "", givenField, new Date(), embedMessageMaker_1.embedMsgState.Normal];
 }
 exports.giveArgsOfHelpEmbedMsgAboutCmd = giveArgsOfHelpEmbedMsgAboutCmd;
+//# sourceMappingURL=giveArgsOfHelpEmbedMsg.js.map

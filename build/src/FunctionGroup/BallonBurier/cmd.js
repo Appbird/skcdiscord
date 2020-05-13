@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.show = exports.remove = exports.add = void 0;
 var lodash_1 = __importDefault(require("lodash"));
-var helperAboutError_1 = __importDefault(require("../../helper/helperAboutError"));
+var helperAboutError_1 = __importDefault(require("../../helper/programHelperFunctions/helperAboutError"));
 var TargetWordColumn_1 = require("./Base/TargetWordColumn");
 var SaveDataController_1 = __importDefault(require("./SaveDataController"));
 var embedMessageMaker_1 = require("../../helper/embedMessageMaker");
@@ -68,3 +68,4 @@ function show(msg) {
     msg.channel.send(embedMessageMaker_1.embedMessageMaker(":information_source: 対象リストとそのワードに関するフラグ一覧", BallonBurier_1.default.realFuncName, "", listOfFlags, new Date(), embedMessageMaker_1.embedMsgState.Normal));
 }
 exports.show = show;
+//# sourceMappingURL=cmd.js.map

@@ -29,3 +29,4 @@ function returnColor(state) {
         case embedMsgState.Error: return 0xff4f42;
     }
 }
+//# sourceMappingURL=embedMessageMaker.js.map

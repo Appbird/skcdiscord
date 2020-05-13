@@ -25,3 +25,4 @@ var Ready = {
     description: "コマンドを打つと特定の文字列を出力するテスト機能。"
 };
 exports.default = Ready;
+//# sourceMappingURL=Ready.js.map

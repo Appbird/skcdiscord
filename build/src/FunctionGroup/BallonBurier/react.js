@@ -13,12 +13,12 @@ function buryWord(msg) {
     var _a;
     var targetWordList = SaveDataController_1.default.load();
     var foundWord = _detectWordInMsg(msg.content, targetWordList);
-    if (foundWord === "")
+    if (standardData_1.default.findCmdChannelId(msg.channel.id) && foundWord === "")
         return;
-    msg.delete();
+    msg.delete({ reason: BallonBurier_1.default.realFuncName + " > \u5BFE\u8C61\u3068\u306A\u308B\u30EF\u30FC\u30C9\u304C\u542B\u307E\u308C\u3066\u3044\u305F\u305F\u3081\u3002" });
     var deleteCountIndex = lodash_1.default.findIndex(targetWordList, { word: foundWord });
     targetWordList[deleteCountIndex].timeOfBuried++;
-    (_a = msg.client.channels.cache.get(standardData_1.default.cmdChannnelId[0])) === null || _a === void 0 ? void 0 : _a.send(embedMessageMaker_1.embedMessageMaker("メッセージが埋め立てられてしまいました…。", BallonBurier_1.default.realFuncName, "__**" + msg.author.username + "**__ > " + msg.content, [{ name: "原因", value: foundWord, inline: true },
+    (_a = msg.client.channels.cache.get(standardData_1.default.cmdChannelId[0])) === null || _a === void 0 ? void 0 : _a.send(embedMessageMaker_1.embedMessageMaker("メッセージが埋め立てられてしまいました…。", BallonBurier_1.default.realFuncName, "__**" + msg.author.username + "**__ > " + msg.content, [{ name: "原因", value: foundWord, inline: true },
         { name: "今まで埋め立てられた回数", value: targetWordList[deleteCountIndex].timeOfBuried.toString(), inline: true }], new Date(), embedMessageMaker_1.embedMsgState.Success));
 }
 exports.default = buryWord;
@@ -29,6 +29,8 @@ exports.default = buryWord;
  */
 function _detectWordInMsg(detectedStr, targetWordList) {
     var converseList = lodash_1.default.entries(FragConversion_1.fragConverses);
+    if (targetWordList === undefined)
+        return "";
     for (var _i = 0, targetWordList_1 = targetWordList; _i < targetWordList_1.length; _i++) {
         var aListedWord = targetWordList_1[_i];
         if (detectedStr.indexOf(aListedWord.usedWordForJudging) !== -1)
@@ -45,3 +47,4 @@ function _detectWordInMsg(detectedStr, targetWordList) {
     }
     return "";
 }
+//# sourceMappingURL=react.js.map

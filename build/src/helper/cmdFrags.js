@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cmdFlagManager = void 0;
-var helperAboutError_1 = __importDefault(require("./helperAboutError"));
+var helperAboutError_1 = __importDefault(require("./programHelperFunctions/helperAboutError"));
 var lodash_1 = __importDefault(require("lodash"));
 var cmdFlagManager = /** @class */ (function () {
     function cmdFlagManager() {
@@ -42,3 +42,4 @@ var cmdFlagManager = /** @class */ (function () {
     return cmdFlagManager;
 }());
 exports.cmdFlagManager = cmdFlagManager;
+//# sourceMappingURL=cmdFrags.js.map

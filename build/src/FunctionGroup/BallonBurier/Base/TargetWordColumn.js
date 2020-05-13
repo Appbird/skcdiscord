@@ -13,3 +13,4 @@ var TargetWordColumn = /** @class */ (function () {
     return TargetWordColumn;
 }());
 exports.TargetWordColumn = TargetWordColumn;
+//# sourceMappingURL=TargetWordColumn.js.map

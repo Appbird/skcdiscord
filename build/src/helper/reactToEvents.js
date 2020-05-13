@@ -10,7 +10,7 @@ var standardData_1 = __importDefault(require("../Data/standardData"));
 var allOfReact = [
     {
         eventType: "message",
-        processes: [function (msg) { if ((msg.channel.id === standardData_1.default.cmdChannnelId[0] || msg.channel.id === standardData_1.default.cmdChannnelId[1]) && msg.content[0] === ">")
+        processes: [function (msg) { if ((standardData_1.default.findCmdChannelId(msg.channel.id)) && msg.content[0] === ">")
                 cmdExecutor_1.default(msg); }]
         /* コマンドは"message"Reactとして設定する。
         ちなみに、TypeScriptが双変性を禁ずる理由はここにある。
@@ -43,3 +43,4 @@ function classifyEventReact(reactTable, react) {
     reactTable[addedColumnIndex].processes.push(react.process);
 }
 exports.default = allOfReact;
+//# sourceMappingURL=reactToEvents.js.map

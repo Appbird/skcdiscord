@@ -6,3 +6,4 @@ exports.fragConverses = {
     "false-edbhk": function (str) { return str.replace(/[\u30A1-\u30FA]/g, function (ch) { return String.fromCharCode(ch.charCodeAt(0) - 0x60); }); },
     "false-edabls": function (str) { return str.toLowerCase(); }
 };
+//# sourceMappingURL=FragConversion.js.map
