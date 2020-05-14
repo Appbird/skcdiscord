@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helperAboutFiles_1 = __importDefault(require("../../../helper/programHelperFunctions/helperAboutFiles"));
 var SaveDataController = {
     load: function () {
-        var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json").saved;
+        var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json");
         if (data == undefined)
             data.saved = [];
         return data;
