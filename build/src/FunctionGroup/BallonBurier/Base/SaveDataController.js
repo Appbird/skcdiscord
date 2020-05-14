@@ -9,7 +9,7 @@ var SaveDataController = {
         var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json");
         if (data == undefined)
             data = { saved: [] };
-        return data;
+        return data.saved;
     },
     save: function (data) {
         return helperAboutFiles_1.default.saveJSONDataInDataBase("BallonBurier/targetWordList.json", { saved: data });

@@ -7,7 +7,7 @@ const SaveDataController = {
     load():TargetWordColumn[]{
         let data = helperAboutFiles.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json");
         if (data == undefined) data = {saved:[]}
-        return data;
+        return data.saved;
     },
     save(data:TargetWordColumn[]){
         return helperAboutFiles.saveJSONDataInDataBase("BallonBurier/targetWordList.json",{saved:data});

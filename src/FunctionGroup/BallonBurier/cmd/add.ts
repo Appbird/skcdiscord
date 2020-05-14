@@ -7,6 +7,7 @@ import { embedMessageMaker, embedMsgState } from "../../../helper/embedMessageMa
 import TargetWordFrags from "../Base/TargetWordFragManager";
 import BallonBurier from "../BallonBurier";
 import { converseWordsFollowingRules } from "./converseWordsFollowingRules";
+import logger from "../../../test/logger";
 
 export function add(msg: Message, tokens: string[]): void {
     const savedTargetWordTable = SaveDataController.load();
