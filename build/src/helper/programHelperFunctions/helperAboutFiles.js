@@ -5,7 +5,7 @@ var helperAboutFiles = {
     loadJSONFromlFileInDataBase: function (fileName) {
         var file = "";
         try {
-            file = fs_1.readFileSync("./database/" + fileName, { encoding: "utf-8" });
+            file = fs_1.readFileSync(__dirname + "/.../database/" + fileName, { encoding: "utf-8" });
         }
         catch (e) {
             return undefined;
@@ -13,7 +13,7 @@ var helperAboutFiles = {
         return JSON.parse(file);
     },
     saveJSONDataInDataBase: function (fileName, data) {
-        fs_1.writeFileSync("./database/" + fileName, JSON.stringify(data));
+        fs_1.writeFileSync(__dirname + "/.../database/" + fileName, JSON.stringify(data));
     }
 };
 exports.default = helperAboutFiles;
