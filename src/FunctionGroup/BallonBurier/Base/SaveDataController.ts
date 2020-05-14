@@ -6,7 +6,7 @@ import { deflate } from "zlib";
 const SaveDataController = {
     load():TargetWordColumn[]{
         let data = helperAboutFiles.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json");
-        if (data == undefined) data.saved = []
+        if (data == undefined) data = {saved:[]}
         return data;
     },
     save(data:TargetWordColumn[]){
