@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var SaveDataController_1 = __importDefault(require("./SaveDataController"));
+var SaveDataController_1 = __importDefault(require("./Base/SaveDataController"));
 var FragConversion_1 = require("./Base/FragConversion");
 var lodash_1 = __importDefault(require("lodash"));
 var embedMessageMaker_1 = require("../../helper/embedMessageMaker");
@@ -19,7 +19,10 @@ function buryWord(msg) {
     var deleteCountIndex = lodash_1.default.findIndex(targetWordList, function (ele) { return ele.word === foundWord; });
     targetWordList[deleteCountIndex].timeOfBuried++;
     SaveDataController_1.default.save(targetWordList);
-    (_a = msg.client.channels.cache.get(standardData_1.default.cmdChannelId[0])) === null || _a === void 0 ? void 0 : _a.send(embedMessageMaker_1.embedMessageMaker("メッセージが埋め立てられてしまいました…。", BallonBurier_1.default.realFuncName, "__**" + msg.author.username + "**__ > " + msg.content, [{ name: "原因", value: foundWord, inline: true },
+    var idOfChannelSentLog = SaveDataController_1.default.configLoad().idOfChannelWhichItOutputReactLogTo;
+    if (idOfChannelSentLog === "")
+        return;
+    (_a = msg.client.channels.cache.get(idOfChannelSentLog)) === null || _a === void 0 ? void 0 : _a.send(embedMessageMaker_1.embedMessageMaker("メッセージが埋め立てられてしまいました…。", BallonBurier_1.default.realFuncName, "__**" + msg.author.username + "**__ > " + msg.content, [{ name: "原因", value: foundWord, inline: true },
         { name: "今まで埋め立てられた回数", value: targetWordList[deleteCountIndex].timeOfBuried.toString(), inline: true }], new Date(), embedMessageMaker_1.embedMsgState.Normal));
 }
 exports.default = buryWord;
@@ -48,4 +51,3 @@ function _detectWordInMsg(detectedStr, targetWordList) {
     }
     return "";
 }
-//# sourceMappingURL=react.js.map

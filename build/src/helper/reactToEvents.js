@@ -43,4 +43,3 @@ function classifyEventReact(reactTable, react) {
     reactTable[addedColumnIndex].processes.push(react.process);
 }
 exports.default = allOfReact;
-//# sourceMappingURL=reactToEvents.js.map

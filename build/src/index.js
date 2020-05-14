@@ -29,4 +29,3 @@ for (var _i = 0, allOfReact_1 = reactToEvents_1.default; _i < allOfReact_1.lengt
 }
 client_1.default.login(process.env.BOT_TOKEN);
 console.log("logged in");
-//# sourceMappingURL=index.js.map

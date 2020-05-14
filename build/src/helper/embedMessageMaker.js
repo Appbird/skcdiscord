@@ -36,4 +36,3 @@ function returnIcon(state) {
         case embedMsgState.Error: return ":exclamation:";
     }
 }
-//# sourceMappingURL=embedMessageMaker.js.map

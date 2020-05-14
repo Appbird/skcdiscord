@@ -20,6 +20,7 @@ export class cmdFlagManager{
     /** @property コマンドに用意された存在するフラグの一覧。*/
     public definedCmdFlags:ICmdFlag[] = [];
     /**
+     * 大文字小文字関係なくフラグは反応します。
      * @param cmdFlags コマンドとして入力された、フラグを表す文字列配列
      * @param channel エラーが起こった際にメッセージを送るチャンネル
      * @return 反応した全てのフラグ

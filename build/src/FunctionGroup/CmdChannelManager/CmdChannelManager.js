@@ -70,4 +70,3 @@ var CmdChannelManager = {
     description: "コマンドを受け付けるチャンネルを管理します。"
 };
 exports.default = CmdChannelManager;
-//# sourceMappingURL=CmdChannelManager.js.map

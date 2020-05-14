@@ -12,6 +12,7 @@ var cmdFlagManager = /** @class */ (function () {
         this.definedCmdFlags = [];
     }
     /**
+     * 大文字小文字関係なくフラグは反応します。
      * @param cmdFlags コマンドとして入力された、フラグを表す文字列配列
      * @param channel エラーが起こった際にメッセージを送るチャンネル
      * @return 反応した全てのフラグ
@@ -42,4 +43,3 @@ var cmdFlagManager = /** @class */ (function () {
     return cmdFlagManager;
 }());
 exports.cmdFlagManager = cmdFlagManager;
-//# sourceMappingURL=cmdFrags.js.map

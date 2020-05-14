@@ -12,4 +12,3 @@ var functionSet = [
     CmdChannelManager_1.default
 ];
 exports.default = functionSet;
-//# sourceMappingURL=functionSet.js.map

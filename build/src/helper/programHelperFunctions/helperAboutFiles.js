@@ -10,4 +10,3 @@ var helperAboutFiles = {
     }
 };
 exports.default = helperAboutFiles;
-//# sourceMappingURL=helperAboutFiles.js.map

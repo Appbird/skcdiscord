@@ -51,4 +51,3 @@ var StandardDataOwner = /** @class */ (function () {
 }());
 var standardData = new StandardDataOwner();
 exports.default = standardData;
-//# sourceMappingURL=standardData.js.map

@@ -1,9 +1,12 @@
 import IFunctionBase from "../../Base/IFunctionBase";
 import ICommandBase from "../../Base/ICommandBase";
 import IReactBase from "../../Base/IReactBase";
-import { add, remove, show } from "./cmd";
+import { remove } from "./cmd/remove";
+import show from "./cmd/show";
+import { add } from "./cmd/add";
 import buryWord from "./react";
 import TargetWordFragManager from "./Base/TargetWordFragManager";
+import reactLog from "./cmd/reactLog";
 
 let cmd:ICommandBase[] = [
     {
@@ -27,6 +30,13 @@ let cmd:ICommandBase[] = [
         description:`対象リストをbotにメッセージとして出力させる。`,
         argsForDescription: [],
         process : show
+    },
+    {
+        commandTitle : "reactlog",
+        numberOfTokenRequired:2,
+        description:`コメントが埋め立てられた時にログを出力するチャンネルを設定する。\`-delete\`フラグを用いてログを出力しないように設定することもできる。`,
+        argsForDescription: [],
+        process : reactLog
     }
 ];
 

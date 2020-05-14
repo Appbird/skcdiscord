@@ -7,4 +7,3 @@ var log4js_1 = __importDefault(require("log4js"));
 var logger = log4js_1.default.getLogger();
 logger.level = "debug";
 exports.default = logger;
-//# sourceMappingURL=logger.js.map

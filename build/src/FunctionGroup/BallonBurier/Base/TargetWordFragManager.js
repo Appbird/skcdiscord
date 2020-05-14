@@ -47,4 +47,3 @@ exports.default = TargetWordFragManager;
     flagOnDescription:"",
     flagOffDescription:"",
 */ 
-//# sourceMappingURL=TargetWordFragManager.js.map

@@ -1,5 +1,5 @@
 import { Message, MessageEmbed, Channel } from "discord.js";
-import SaveDataController from "./SaveDataController";
+import SaveDataController from "./Base/SaveDataController";
 import { fragConverses } from "./Base/FragConversion";
 import { TargetWordColumn } from "./Base/TargetWordColumn";
 import _ from "lodash";
@@ -16,7 +16,11 @@ export default function buryWord(msg:Message){
     const deleteCountIndex = _.findIndex(targetWordList,ele => ele.word === foundWord);
     targetWordList[deleteCountIndex].timeOfBuried++;
     SaveDataController.save(targetWordList);
-    msg.client.channels.cache.get(standardData.cmdChannelId[0])?.send(embedMessageMaker(
+
+    let idOfChannelSentLog = SaveDataController.configLoad().idOfChannelWhichItOutputReactLogTo;
+    if(idOfChannelSentLog === "") return;
+
+    msg.client.channels.cache.get(idOfChannelSentLog)?.send(embedMessageMaker(
             "メッセージが埋め立てられてしまいました…。",
             BallonBurier.realFuncName,
             `__**${msg.author.username}**__ > ${msg.content}`,
