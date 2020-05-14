@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeCmdChannelIdState = exports.addCmdChannelIdState = void 0;
 var helperAboutFiles_1 = __importDefault(require("../helper/programHelperFunctions/helperAboutFiles"));
+var releaseConfig_1 = __importDefault(require("../helper/releaseConfig"));
 var addCmdChannelIdState;
 (function (addCmdChannelIdState) {
     addCmdChannelIdState[addCmdChannelIdState["success"] = 0] = "success";
@@ -28,6 +29,10 @@ var StandardDataOwner = /** @class */ (function () {
         }
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
+        this.t = undefined;
+        if (!releaseConfig_1.default) {
+            this.t = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("t.json").t;
+        }
     }
     StandardDataOwner.prototype.findCmdChannelId = function (channelId) {
         return this.cmdChannelId.findIndex(function (registeredCh) { return registeredCh === channelId; }) !== -1;

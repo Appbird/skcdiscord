@@ -1,4 +1,5 @@
 import helperAboutFiles from "../helper/programHelperFunctions/helperAboutFiles";
+import release from "../helper/releaseConfig";
 
 export enum addCmdChannelIdState{
     success,
@@ -21,6 +22,10 @@ class StandardDataOwner{
         }
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
+        this.t = undefined;
+        if (!release){
+            this.t = helperAboutFiles.loadJSONFromlFileInDataBase("t.json").t;
+        }
     }
     public findCmdChannelId(channelId:string){
         return this.cmdChannelId.findIndex(registeredCh => registeredCh === channelId) !== -1;
@@ -48,6 +53,7 @@ class StandardDataOwner{
     }
     cmdChannelId:string[];
     botId:string;
+    t:string | undefined;
 }
 const standardData = new StandardDataOwner();
 

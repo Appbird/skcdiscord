@@ -2,6 +2,7 @@ import {Client, Message} from "discord.js";
 import allOfReact from "./helper/reactToEvents";
 import standardData from "./Data/standardData";
 import client from "./client";
+import release from "./helper/releaseConfig";
 
 for (const reacts of allOfReact){
     client.on(reacts.eventType, (...args)=>{
@@ -15,5 +16,6 @@ for (const reacts of allOfReact){
     }
     )
 }
-client.login(process.env.BOT_TOKEN);
+
+if (release) {client.login(process.env.BOT_TOKEN)} else {client.login(standardData.t)}
 console.log(`logged in`);

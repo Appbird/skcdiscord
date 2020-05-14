@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var reactToEvents_1 = __importDefault(require("./helper/reactToEvents"));
 var standardData_1 = __importDefault(require("./Data/standardData"));
 var client_1 = __importDefault(require("./client"));
+var releaseConfig_1 = __importDefault(require("./helper/releaseConfig"));
 var _loop_1 = function (reacts) {
     client_1.default.on(reacts.eventType, function () {
         var args = [];
@@ -27,5 +28,10 @@ for (var _i = 0, allOfReact_1 = reactToEvents_1.default; _i < allOfReact_1.lengt
     var reacts = allOfReact_1[_i];
     _loop_1(reacts);
 }
-client_1.default.login(process.env.BOT_TOKEN);
+if (releaseConfig_1.default) {
+    client_1.default.login(process.env.BOT_TOKEN);
+}
+else {
+    client_1.default.login(standardData_1.default.t);
+}
 console.log("logged in");
