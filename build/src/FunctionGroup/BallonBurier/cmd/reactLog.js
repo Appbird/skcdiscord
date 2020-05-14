@@ -9,10 +9,8 @@ var BallonBurier_1 = __importDefault(require("../BallonBurier"));
 function reactLog(msg, tokens) {
     var saved = SaveDataController_1.default.configLoad();
     saved.idOfChannelWhichItOutputReactLogTo = msg.channel.id;
-    if (tokens[2] !== undefined) {
-        if (tokens[2].toLowerCase() === "-delete") {
-            saved.idOfChannelWhichItOutputReactLogTo = "";
-        }
+    if (tokens[2] !== undefined && tokens[2].toLowerCase() === "-delete") {
+        saved.idOfChannelWhichItOutputReactLogTo = "";
     }
     SaveDataController_1.default.configSave(saved);
     msg.channel.send(embedMessageMaker_1.embedMessageMaker((saved.idOfChannelWhichItOutputReactLogTo !== "") ?

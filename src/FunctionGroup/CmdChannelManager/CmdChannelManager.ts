@@ -31,6 +31,7 @@ const cmd:ICommandBase[] = [
     numberOfTokenRequired:2,
     argsForDescription:[],
     process: (msg) => {
+        standardData.removeCmdChannelId(msg.channel.id);
         msg.channel.send(
         embedMessageMaker(
             `このチャンネルをコマンドチャンネルから外しました。`,

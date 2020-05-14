@@ -18,6 +18,7 @@ var cmd = [
         numberOfTokenRequired: 2,
         argsForDescription: [],
         process: function (msg) {
+            standardData_1.default.removeCmdChannelId(msg.channel.id);
             msg.channel.send(embedMessageMaker_1.embedMessageMaker("\u3053\u306E\u30C1\u30E3\u30F3\u30CD\u30EB\u3092\u30B3\u30DE\u30F3\u30C9\u30C1\u30E3\u30F3\u30CD\u30EB\u304B\u3089\u5916\u3057\u307E\u3057\u305F\u3002", CmdChannelManager.realFuncName, "\u4ECA\u5F8C\u306F\u3053\u306E\u30C1\u30E3\u30F3\u30CD\u30EB\u306F\u30B3\u30DE\u30F3\u30C9\u3092\u53D7\u3051\u4ED8\u3051\u307E\u305B\u3093\u3002", [], new Date(), embedMessageMaker_1.embedMsgState.Success));
         },
         description: "コマンドを受け付けるチャンネルを減らす。\n対象となるのはこのコマンドが打ち込まれたチャンネルです。",
