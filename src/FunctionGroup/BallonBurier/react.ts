@@ -10,7 +10,7 @@ import BallonBurier from "./BallonBurier";
 export default function buryWord(msg:Message){
     const targetWordList = SaveDataController.load();
     let foundWord = _detectWordInMsg(msg.content,targetWordList);
-    if (standardData.findCmdChannelId(msg.channel.id) || foundWord === "") return;
+    if ((msg.content.toLowerCase().indexOf(">babu") === 0 && standardData.findCmdChannelId(msg.channel.id) ) || foundWord === "") return;
 
     msg.delete({reason:`${BallonBurier.realFuncName} > 対象となるワードが含まれていたため。`});
     const deleteCountIndex = _.findIndex(targetWordList,ele => ele.word === foundWord);

@@ -13,7 +13,7 @@ function buryWord(msg) {
     var _a;
     var targetWordList = SaveDataController_1.default.load();
     var foundWord = _detectWordInMsg(msg.content, targetWordList);
-    if (standardData_1.default.findCmdChannelId(msg.channel.id) || foundWord === "")
+    if ((msg.content.toLowerCase().indexOf(">babu") === 0 && standardData_1.default.findCmdChannelId(msg.channel.id)) || foundWord === "")
         return;
     msg.delete({ reason: BallonBurier_1.default.realFuncName + " > \u5BFE\u8C61\u3068\u306A\u308B\u30EF\u30FC\u30C9\u304C\u542B\u307E\u308C\u3066\u3044\u305F\u305F\u3081\u3002" });
     var deleteCountIndex = lodash_1.default.findIndex(targetWordList, function (ele) { return ele.word === foundWord; });

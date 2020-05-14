@@ -20,6 +20,12 @@ var removeCmdChannelIdState;
 var StandardDataOwner = /** @class */ (function () {
     function StandardDataOwner() {
         var data = helperAboutFiles_1.default.loadJSONFromlFileInDataBase("standard.json");
+        if (data === undefined) {
+            data = {
+                botId: "708688091556216894",
+                cmdChannelId: []
+            };
+        }
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
     }

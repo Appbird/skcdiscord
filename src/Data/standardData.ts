@@ -12,7 +12,13 @@ export enum removeCmdChannelIdState{
 }
 class StandardDataOwner{
     constructor (){
-        const data = helperAboutFiles.loadJSONFromlFileInDataBase("standard.json");
+        let data = helperAboutFiles.loadJSONFromlFileInDataBase("standard.json");
+        if (data === undefined){
+            data = {
+                botId: "708688091556216894",
+                cmdChannelId: []
+            }
+        }
         this.botId = data.botId;
         this.cmdChannelId = data.cmdChannelId;
     }
