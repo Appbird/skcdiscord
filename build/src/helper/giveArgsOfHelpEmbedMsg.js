@@ -20,7 +20,7 @@ function giveArgsOfHelpEmbedMsgAboutCmd(functionIndex) {
     var givenField = functionSet_1.default[functionIndex].
         commands.map(function (ele) {
         return {
-            name: "" + ele.commandTitle,
+            name: "__**\u3010" + ele.commandTitle + "\u3011**__",
             value: "```>" + functionSet_1.default[functionIndex].functionName + " " + ele.commandTitle + " " + ele.argsForDescription.join(" ") + "```\n                " + ((ele.allowedFlags !== undefined) ?
                 "**[フラグ]**\n" + ele.allowedFlags.map(function (flag) { return "__" + flag.cmdForFlag + "(" + flag.flagTitle + ")" + "__\nOnのとき、" + flag.flagOnDescription; }).join("\n") + "\n" : "") + "**[\u8AAC\u660E]**\n" + ele.description,
             inline: false
