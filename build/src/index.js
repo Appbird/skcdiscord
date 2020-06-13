@@ -4,9 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var reactToEvents_1 = __importDefault(require("./helper/reactToEvents"));
-var standardData_1 = __importDefault(require("./Data/standardData"));
+var standardData_1 = require("./Data/standardData");
 var client_1 = __importDefault(require("./client"));
-var releaseConfig_1 = __importDefault(require("./helper/releaseConfig"));
 var _loop_1 = function (reacts) {
     client_1.default.on(reacts.eventType, function () {
         var args = [];
@@ -15,7 +14,7 @@ var _loop_1 = function (reacts) {
         }
         if (reacts.eventType === "message") {
             var msg = args[0];
-            if (msg.author.id === standardData_1.default.botId)
+            if (msg.author.id === standardData_1.StandardDataManager.getBotId())
                 return;
         }
         for (var _a = 0, _b = reacts.processes; _a < _b.length; _a++) {
@@ -28,10 +27,4 @@ for (var _i = 0, allOfReact_1 = reactToEvents_1.default; _i < allOfReact_1.lengt
     var reacts = allOfReact_1[_i];
     _loop_1(reacts);
 }
-if (releaseConfig_1.default) {
-    client_1.default.login(process.env.BOT_TOKEN);
-}
-else {
-    client_1.default.login(standardData_1.default.t);
-}
-console.log("logged in");
+client_1.default.login(standardData_1.StandardDataManager.getToken());

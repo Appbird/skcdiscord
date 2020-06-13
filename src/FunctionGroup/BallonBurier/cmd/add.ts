@@ -10,11 +10,13 @@ import { converseWordsFollowingRules } from "./converseWordsFollowingRules";
 
 
 export function add(msg: Message, tokens: string[]): void {
-    const savedTargetWordTable = SaveDataController.load();
     const wordInformation = tokens.slice(2);
     const cmdFlagsChar = wordInformation.slice(1);
     const flagManager = new TargetWordFrags();
     const addedColumn = new TargetWordColumn(wordInformation[0]);
+    
+    const savedTargetWordTable = SaveDataController.load().then(
+        savedTargetWordTable => {
     addedColumn.flags = flagManager.turnOn(cmdFlagsChar, msg.channel);
     addedColumn.usedWordForJudging = converseWordsFollowingRules(addedColumn.word, flagManager);
     if (_.findIndex(savedTargetWordTable, row => row.usedWordForJudging === addedColumn.usedWordForJudging) !== -1) {
@@ -31,4 +33,5 @@ export function add(msg: Message, tokens: string[]): void {
         };
     });
     msg.channel.send(embedMessageMaker(`ワード「${addedColumn.word}」がリストに追加されました。`, BallonBurier.realFuncName, "以下の属性が適用されています。", listOfFlags, addedColumn.registeredTimeStamp, embedMsgState.Success));
+    });
 }

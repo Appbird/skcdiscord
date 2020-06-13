@@ -4,8 +4,8 @@ import { embedMessageMaker, embedMsgState } from "../../../helper/embedMessageMa
 import BallonBurier from "../BallonBurier";
 
 export default function reactLog(msg:Message,tokens:string[]){
-    const saved = SaveDataController.configLoad();
-    
+    const saved = SaveDataController.configLoad().then(
+       saved => {
     saved.idOfChannelWhichItOutputReactLogTo = msg.channel.id;
     if ( tokens[2] !== undefined && tokens[2].toLowerCase() === "-delete") {
         saved.idOfChannelWhichItOutputReactLogTo = ""
@@ -21,5 +21,7 @@ export default function reactLog(msg:Message,tokens:string[]){
                 "今後このチャンネルにログが出力されます。":
                 "どこかのチャンネルでもう一度このコマンドを入力するとログが出力されるようになります。",
                 [],new Date(),embedMsgState.Normal))
+    
+    });
 
 }

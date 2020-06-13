@@ -1,5 +1,6 @@
 import helperAboutFiles from "../helper/programHelperFunctions/helperAboutFiles";
-import release from "../helper/releaseConfig";
+import release from "../releaseConfig";
+import { readFileSync } from "fs";
 
 export enum addCmdChannelIdState{
     success,
@@ -11,50 +12,39 @@ export enum removeCmdChannelIdState{
     notChannelFound,
     failed
 }
-class StandardDataOwner{
-    constructor (){
-        let data = helperAboutFiles.loadJSONFromlFileInDataBase("standard.json");
-        if (data === undefined){
-            data = {
-                botId: "708688091556216894",
-                cmdChannelId: []
-            }
-        }
-        this.botId = data.botId;
-        this.cmdChannelId = data.cmdChannelId;
-        this.t = undefined;
-        if (!release){
-            this.t = helperAboutFiles.loadJSONFromlFileInDataBase("t.json").t;
-        }
+export class StandardDataManager{
+    public static getBotId(){
+        return "708688091556216894";
     }
-    public findCmdChannelId(channelId:string){
-        return this.cmdChannelId.findIndex(registeredCh => registeredCh === channelId) !== -1;
+    public static getToken(){
+        return release ? process.env["BOT_TOKEN"]:readFileSync("t.json",'utf8');
     }
-    public addCmdChannelId(channelId:string):addCmdChannelIdState{
-        if (this.findCmdChannelId(channelId)) return addCmdChannelIdState.alreadyadded;
-        this.cmdChannelId.push(channelId);
-        this._save();
-        return addCmdChannelIdState.success;
+    
+    public static async getCmdChannelId(){
+        let data:{[key:string]:string[]} | undefined = await helperAboutFiles.fetchJSONDataFromDiscordDataBase("standard.json");
+        if (data === undefined) return [];
+        return data.cmdChannelId;
+    }
+    public static async addCmdChannelId(channelId:string){
+        let cmdChannelId = await StandardDataManager.getCmdChannelId();
+            if (cmdChannelId.findIndex((cmd) => cmd === channelId) === -1) return addCmdChannelIdState.alreadyadded;
+            cmdChannelId.push(channelId);
+            StandardDataManager._save(cmdChannelId);
+            return addCmdChannelIdState.success;
 
     }
-    public removeCmdChannelId(removedId:string):removeCmdChannelIdState{
-        const lengthBeforeProcess = this.cmdChannelId.length;
-        this.cmdChannelId = this.cmdChannelId.filter(element => element !== removedId);
-        if　(lengthBeforeProcess === this.cmdChannelId.length) return removeCmdChannelIdState.notChannelFound;
-        this._save();
+    public static async removeCmdChannelId(removedId:string){
+        let cmdChannelId = await StandardDataManager.getCmdChannelId()
+        const lengthBeforeProcess = cmdChannelId.length;
+        cmdChannelId = cmdChannelId.filter(element => element !== removedId);
+        if　(lengthBeforeProcess === cmdChannelId.length) return removeCmdChannelIdState.notChannelFound;
+        this._save(cmdChannelId);
         return removeCmdChannelIdState.success;
     }
-    private _save(){
-        helperAboutFiles.saveJSONDataInDataBase("standard.json",
+    private static _save(cmdChannelId:string[]){
+        helperAboutFiles.saveJSONFromDiscordDataBase("standard.json",
         {
-            "cmdChannelId":this.cmdChannelId,
-            "botId": this.botId,
+            "cmdChannelId":cmdChannelId
         })
     }
-    cmdChannelId:string[];
-    botId:string;
-    t:string | undefined;
 }
-const standardData = new StandardDataOwner();
-
-export default standardData;

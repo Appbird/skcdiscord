@@ -11,7 +11,7 @@ export default function executeCmd(msg:Message):void{
     //コマンドとして成立しているか
     let tokenArray = devideIntoTokens(msg.content);
     //まずhelpコマンドの確認
-    // TODO:これを一つの機能として独立させられないものか…。
+    // CH:このhelp機能を一つの機能として独立させられないものか…。
     if(tokenArray[0]==="help"){
         msg.channel.send(embedMessageMaker(...giveArgsOfHelpEmbedMsgAboutFunction()));
         if (tokenArray[1]==="-all"){

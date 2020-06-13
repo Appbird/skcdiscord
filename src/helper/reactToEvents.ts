@@ -4,8 +4,7 @@ import { ClientEvents, Message} from "discord.js";
 import _ from "lodash";
 import executeCmd from "./cmdExecutor";
 import IReactBase from "../Base/IReactBase";
-import standardData from "../Data/standardData";
-
+import {StandardDataManager} from "../Data/standardData"
  
 
     let allOfReact:IReactProcessBox<keyof ClientEvents>[] = [
@@ -13,7 +12,13 @@ import standardData from "../Data/standardData";
             eventType:"message",
             processes:
             [(msg:Message) =>
-                {if ((standardData.findCmdChannelId(msg.channel.id)) && msg.content[0]===">") executeCmd(msg);}]
+                {
+                    StandardDataManager.getCmdChannelId().then(
+                        (cmdChannelId) => {
+                    if (cmdChannelId.findIndex(id => id === msg.channel.id ) && msg.content[0]===">") executeCmd(msg);
+                })
+                }
+            ]
             /* コマンドは"message"Reactとして設定する。
             ちなみに、TypeScriptが双変性を禁ずる理由はここにある。
             このとき、配列からこの要素にアクセスしていても、

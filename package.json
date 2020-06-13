@@ -1,5 +1,5 @@
 {
-  "name": "SkcDiscordFunctions",
+  "name": "skcdiscordfunctions",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.150",
     "@types/mocha": "^7.0.2",
+    "@types/ws": "^7.2.4",
     "discord.js": "^12.2.0",
     "lodash": "^4.17.15",
     "log4js": "^6.2.1",

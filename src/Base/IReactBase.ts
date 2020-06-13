@@ -7,4 +7,3 @@ export default interface IReactBase<K extends keyof ClientEvents>{
     reactName:string;
     process:IReactProcess<K>;
 }
-

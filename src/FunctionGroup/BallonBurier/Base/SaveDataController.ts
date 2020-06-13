@@ -4,23 +4,23 @@ import { deflate } from "zlib";
 
 
 const SaveDataController = {
-    load():TargetWordColumn[]{
-        let data = helperAboutFiles.loadJSONFromlFileInDataBase("BallonBurier/targetWordList.json");
+    async load():Promise<TargetWordColumn[]>{
+        let data = await helperAboutFiles.fetchJSONDataFromDiscordDataBase("BallonBurier/targetWordList.json");
         if (data == undefined) data = {saved:[]}
         return data.saved;
     },
-    save(data:TargetWordColumn[]){
-        return helperAboutFiles.saveJSONDataInDataBase("BallonBurier/targetWordList.json",{saved:data});
+    async save(data:TargetWordColumn[]){
+        return helperAboutFiles.saveJSONFromDiscordDataBase("BallonBurier/targetWordList.json",{saved:data});
     },
-    configLoad():IConfig{
-        let data = helperAboutFiles.loadJSONFromlFileInDataBase("BallonBurier/config.json");
+    async configLoad():Promise<IConfig>{
+        let data = await helperAboutFiles.fetchJSONDataFromDiscordDataBase("BallonBurier/config.json");
         if (data == undefined) data = {
             idOfChannelWhichItOutputReactLogTo: ""
         }
         return data;
     },
-    configSave(data:IConfig){
-        return helperAboutFiles.saveJSONDataInDataBase("BallonBurier/config.json",data)
+    async configSave(data:IConfig){
+        helperAboutFiles.saveJSONFromDiscordDataBase("BallonBurier/config.json",data)
     }
 
 }

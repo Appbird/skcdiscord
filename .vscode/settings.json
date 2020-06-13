@@ -1,0 +1,54 @@
+{
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "CTODO",
+        "CH",
+        "NOTE"
+    ],
+    "todo-tree.filtering.excludeGlobs": [
+        "**\\node_modules\\**",
+        "**\\build\\**"
+    ],
+    "todo-tree.highlights.customHighlight": {
+        "TODO":{
+            "icon":"$(debug-stop)",
+            "type":"text",
+            "iconColour":"#de9400",
+            "background":"#de9400",
+            "foreground":"white"
+        },
+        "CTODO":{
+            "type":"text",
+            "iconColour":"#0a8f1e",
+            "background":"#0a8f1e",
+            "foreground":"white"
+        },
+        "FIXME":{
+            "icon":"$(bug)",
+            "type":"text",
+            "iconColour":"red",
+            "background":"red",
+            "foreground":"white"
+
+        },
+        "CH":{
+            "comment": "挑戦したいことに対してのメモ",
+            "icon":"$(megaphone)",
+            "type":"text",
+            "iconColour":"#2dcccf",
+            "background":"#2dcccf",
+            "foreground":"white"
+        },
+        "NOTE":{
+            "icon":"$(megaphone)",
+            "type":"text",
+            "iconColour":"#2dcccf",
+            "background":"#2dcccf",
+            "foreground":"white"
+        }
+    }
+}

@@ -13,7 +13,7 @@ function executeCmd(msg) {
     //コマンドとして成立しているか
     var tokenArray = devideIntoTokens(msg.content);
     //まずhelpコマンドの確認
-    // TODO:これを一つの機能として独立させられないものか…。
+    // CH:このhelp機能を一つの機能として独立させられないものか…。
     if (tokenArray[0] === "help") {
         msg.channel.send(embedMessageMaker_1.embedMessageMaker.apply(void 0, giveArgsOfHelpEmbedMsg_1.giveArgsOfHelpEmbedMsgAboutFunction()));
         if (tokenArray[1] === "-all") {

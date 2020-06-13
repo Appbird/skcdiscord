@@ -7,7 +7,8 @@ import BallonBurier from "../BallonBurier";
 
 export function remove(msg:Message, tokens:string[]):void {
     let deletedWord = tokens[2];
-    let savedData = SaveDataController.load();
+    SaveDataController.load().then(
+        savedData => {
 
     let indexWhereFound =_.findIndex(savedData,ele => ele.word === deletedWord)
     if (indexWhereFound === -1 || deletedWord === "" || deletedWord === undefined) {
@@ -24,4 +25,5 @@ export function remove(msg:Message, tokens:string[]):void {
     ));
     SaveDataController.save(savedData.filter((ele,index) => index !== indexWhereFound));
 
+    });
 }

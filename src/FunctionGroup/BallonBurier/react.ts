@@ -4,23 +4,25 @@ import { fragConverses } from "./Base/FragConversion";
 import { TargetWordColumn } from "./Base/TargetWordColumn";
 import _ from "lodash";
 import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
-import standardData from "../../Data/standardData";
 import BallonBurier from "./BallonBurier";
+import {StandardDataManager} from "../../Data/standardData";
 
 export default function buryWord(msg:Message){
-    const targetWordList = SaveDataController.load();
-    let foundWord = _detectWordInMsg(msg.content,targetWordList);
-    if ((msg.content.toLowerCase().indexOf(">babu") === 0 && standardData.findCmdChannelId(msg.channel.id) ) || foundWord === "") return;
+    Promise.all([SaveDataController.load(),SaveDataController.configLoad(),StandardDataManager.getCmdChannelId()]).then(
+        ([targetWordList,{idOfChannelWhichItOutputReactLogTo},cmdChannelId]) => {
+            const idOfChannelSentLog = idOfChannelWhichItOutputReactLogTo;
+            const foundWord = _detectWordInMsg(msg.content,targetWordList);
 
-    msg.delete({reason:`${BallonBurier.realFuncName} > 対象となるワードが含まれていたため。`});
-    const deleteCountIndex = _.findIndex(targetWordList,ele => ele.word === foundWord);
-    targetWordList[deleteCountIndex].timeOfBuried++;
-    SaveDataController.save(targetWordList);
+            if ((msg.content.toLowerCase().indexOf(">babu") === 0 && cmdChannelId.findIndex( ele => ele === msg.channel.id) === -1 ) || foundWord === "") return;
 
-    let idOfChannelSentLog = SaveDataController.configLoad().idOfChannelWhichItOutputReactLogTo;
-    if(idOfChannelSentLog === "") return;
+            msg.delete({reason:`${BallonBurier.realFuncName} > 対象となるワードが含まれていたため。`});
+            const deleteCountIndex = _.findIndex(targetWordList,ele => ele.word === foundWord);
+            targetWordList[deleteCountIndex].timeOfBuried++;
+            SaveDataController.save(targetWordList);
 
-    msg.client.channels.cache.get(idOfChannelSentLog)?.send(embedMessageMaker(
+            if(idOfChannelSentLog === "") return;
+
+        msg.client.channels.cache.get(idOfChannelSentLog)?.send(embedMessageMaker(
             "メッセージが埋め立てられてしまいました…。",
             BallonBurier.realFuncName,
             `__**${msg.author.username}**__ > ${msg.content}`,
@@ -28,9 +30,10 @@ export default function buryWord(msg:Message){
                 {name:"今まで埋め立てられた回数",value:targetWordList[deleteCountIndex].timeOfBuried.toString(),inline:true}],
             new Date(),
             embedMsgState.Normal
-        )
+        ) )
+        }
     );
-}
+    }
 /**
  * @param msg 受け取ったメッセージの内容
  * @param targetWordList 対象リスト

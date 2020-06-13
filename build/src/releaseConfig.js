@@ -1,3 +1,4 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-Promise.all;
+var release = false;
+exports.default = release;

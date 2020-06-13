@@ -6,12 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
 var lodash_1 = __importDefault(require("lodash"));
 var cmdExecutor_1 = __importDefault(require("./cmdExecutor"));
-var standardData_1 = __importDefault(require("../Data/standardData"));
+var standardData_1 = require("../Data/standardData");
 var allOfReact = [
     {
         eventType: "message",
-        processes: [function (msg) { if ((standardData_1.default.findCmdChannelId(msg.channel.id)) && msg.content[0] === ">")
-                cmdExecutor_1.default(msg); }]
+        processes: [function (msg) {
+                standardData_1.StandardDataManager.getCmdChannelId().then(function (cmdChannelId) {
+                    if (cmdChannelId.findIndex(function (id) { return id === msg.channel.id; }) && msg.content[0] === ">")
+                        cmdExecutor_1.default(msg);
+                });
+            }
+        ]
         /* コマンドは"message"Reactとして設定する。
         ちなみに、TypeScriptが双変性を禁ずる理由はここにある。
         このとき、配列からこの要素にアクセスしていても、
