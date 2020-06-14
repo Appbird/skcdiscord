@@ -17,7 +17,7 @@ export class StandardDataManager{
         return "708688091556216894";
     }
     public static getToken(){
-        return release ? process.env["BOT_TOKEN"]:readFileSync("t.json",'utf8');
+        return release ? process.env["BOT_TOKEN"]:JSON.parse(readFileSync("./database/t.json",'utf8')).t;
     }
     
     public static async getCmdChannelId(){
@@ -27,7 +27,7 @@ export class StandardDataManager{
     }
     public static async addCmdChannelId(channelId:string){
         let cmdChannelId = await StandardDataManager.getCmdChannelId();
-            if (cmdChannelId.findIndex((cmd) => cmd === channelId) === -1) return addCmdChannelIdState.alreadyadded;
+        if (cmdChannelId.findIndex( ele => ele === channelId ) !== -1) return addCmdChannelIdState.alreadyadded;
             cmdChannelId.push(channelId);
             StandardDataManager._save(cmdChannelId);
             return addCmdChannelIdState.success;

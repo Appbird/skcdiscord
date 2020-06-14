@@ -1,43 +1,42 @@
 import client from "../../client";
 import { TextChannel,Channel, Client, MessageEmbed, MessageAttachment} from "discord.js";
-import helperAboutError from "./helperAboutError";
-import { StandardDataManager } from "../../Data/standardData";
+import fetch from "node-fetch";
 const helperAboutFiles = {
-    
-        //TODO: ここのセーブデータを添付ファイルにすることで保管できないか？
+    //CH: これバイナリとして保存できない？
     async fetchJSONDataFromDiscordDataBase(fileName:string){
-        fileName = fileName.replace(/[\/\\]/g,"_")
-       const ch = findFileTextChannel(client);
-       let dataInText:string|undefined;
-       for (const msg of ch.messages.cache.array()){
-           const dataOrUndefined = msg.attachments.find( (attachment) => attachment.name === fileName)
-            if (dataOrUndefined === undefined) break;
-            dataInText = dataOrUndefined.attachment.toString();
-       }
-       if (dataInText === undefined) return undefined;
-       return JSON.parse(dataInText);
-    },
-
-    saveJSONFromDiscordDataBase(fileName:string,data:any):void{
-        fileName = escapeFileName(fileName);
-        const savedDataInText = JSON.stringify(data);
+        const escapedFileName = escapeFileName(fileName);
         const ch = findFileTextChannel(client);
-        let isdataSet = false;
-        for (const msg of ch.messages.cache.array()){
-            const dataKey = msg.attachments.findKey( (attachment) => attachment.name === fileName)
-            if (dataKey === undefined) continue;
-            if (msg.attachments.get(dataKey)?.setFile(savedDataInText,fileName) === undefined) throw new Error("データをセットできませんでした。")
-            isdataSet = true;
+        const dataOrURL = (await findAttachmentFromChannel(escapedFileName,ch))?.attachmentInMsg.attachment;
+        if (dataOrURL === undefined) return undefined;
+        console.info(`load: ${dataOrURL} (${typeof dataOrURL}) as ${escapedFileName}`)
+        
+        return (typeof dataOrURL === "string") ? await (await fetch(dataOrURL)).json():JSON.parse(dataOrURL.toString());
+    },
+    async saveJSONFromDiscordDataBase(fileName:string,data:any){
+        const escapedFileName = escapeFileName(fileName);
+        const savedDataInText = JSON.stringify(data);
+        const savedDataInBuffer = Buffer.from(savedDataInText);
+        const ch = findFileTextChannel(client);
+        const attachmentAsTarget = await findAttachmentFromChannel(escapedFileName,ch);
+        console.info(`saved: ${savedDataInText} as ${escapedFileName}`)
+        if (attachmentAsTarget !== undefined){
+            attachmentAsTarget.msg.delete();
         }
-        if (isdataSet) return;
-        /* thanks : https://github.com/discordjs/discord.js/blob/master/docs/examples/attachments.md */
-        ch.send(new MessageAttachment(savedDataInText,fileName));
+        
+        ch.send(new MessageAttachment(savedDataInBuffer,escapedFileName));
     }
 }
 
 function escapeFileName(fileName:string){
     return fileName.replace(/[\/\\]/g,"__")
-
+}
+async function findAttachmentFromChannel(attachmentName:string,ch:TextChannel){
+    const messages = await ch.messages.fetch({ limit: 50});
+    for (const msg of messages.array()){
+        const data = msg.attachments.find( attachment => attachment.name === attachmentName);
+        if (data === undefined) continue;
+        return {attachmentInMsg:data,msg:msg};
+    }
 }
 export default helperAboutFiles;
 
@@ -45,9 +44,7 @@ function ChIsTextCh(ch:Channel):ch is TextChannel{
     return ch.type === "text"
 }
 function findFileTextChannel(client:Client):TextChannel{
-    const textCh = findFileVault(client)?.channels.cache.find( ( channel => {
-        return (channel.name === "fileVault")
-    } ));
+    const textCh = findFileVault(client)?.channels.cache.find( ( channel => channel.name === "filevault" ));
     if (textCh === undefined) throw new Error("テキストチャンネルを取得できませんでした。");
     if (!ChIsTextCh(textCh)) throw new Error("取得したチャンネルがテキストチャンネルではありませんでした。");
     return textCh;

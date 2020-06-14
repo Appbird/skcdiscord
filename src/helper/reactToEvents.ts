@@ -15,7 +15,7 @@ import {StandardDataManager} from "../Data/standardData"
                 {
                     StandardDataManager.getCmdChannelId().then(
                         (cmdChannelId) => {
-                    if (cmdChannelId.findIndex(id => id === msg.channel.id ) && msg.content[0]===">") executeCmd(msg);
+                    if (cmdChannelId.findIndex(id => id === msg.channel.id ) !== -1 && msg.content[0]===">") executeCmd(msg);
                 })
                 }
             ]

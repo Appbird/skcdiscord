@@ -40,60 +40,97 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = __importDefault(require("../../client"));
+var discord_js_1 = require("discord.js");
+var node_fetch_1 = __importDefault(require("node-fetch"));
 var helperAboutFiles = {
+    //CH: これバイナリとして保存できない？
     fetchJSONDataFromDiscordDataBase: function (fileName) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var ch, savedDataInText;
-            return __generator(this, function (_a) {
-                fileName = fileName.replace(/\/|\\/g, "_").toLowerCase();
-                ch = findFileTextChannel(client_1.default, fileName);
-                savedDataInText = ch === null || ch === void 0 ? void 0 : ch.messages.cache.sort(function (msg1, msg2) {
-                    return (msg1.createdAt.getTime() < msg2.createdAt.getTime()) ? -1 : 1;
-                }).array().join();
-                if (savedDataInText === undefined)
-                    return [2 /*return*/, undefined];
-                return [2 /*return*/, JSON.parse(savedDataInText)];
+            var escapedFileName, ch, dataOrURL, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        escapedFileName = escapeFileName(fileName);
+                        ch = findFileTextChannel(client_1.default);
+                        return [4 /*yield*/, findAttachmentFromChannel(escapedFileName, ch)];
+                    case 1:
+                        dataOrURL = (_a = (_c.sent())) === null || _a === void 0 ? void 0 : _a.attachmentInMsg.attachment;
+                        if (dataOrURL === undefined)
+                            return [2 /*return*/, undefined];
+                        console.info("load: " + dataOrURL + " (" + typeof dataOrURL + ") as " + escapedFileName);
+                        if (!(typeof dataOrURL === "string")) return [3 /*break*/, 4];
+                        return [4 /*yield*/, node_fetch_1.default(dataOrURL)];
+                    case 2: return [4 /*yield*/, (_c.sent()).json()];
+                    case 3:
+                        _b = _c.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        _b = JSON.parse(dataOrURL.toString());
+                        _c.label = 5;
+                    case 5: return [2 /*return*/, _b];
+                }
             });
         });
     },
     saveJSONFromDiscordDataBase: function (fileName, data) {
-        var _a, _b;
-        fileName = fileName.replace(/\/|\\/g, "_").toLowerCase();
-        var savedDataInText = JSON.stringify(data);
-        var ch = findFileTextChannel(client_1.default, fileName);
-        if (ch === undefined)
-            return;
-        var msgIds = ch === null || ch === void 0 ? void 0 : ch.messages.cache.sort(function (msg1, msg2) {
-            return (msg1.createdAt.getTime() < msg2.createdAt.getTime()) ? -1 : 1;
-        }).map(function (msg) { return msg.id; });
-        var numberOfMessageNeeded = Math.ceil(savedDataInText.length / 2000);
-        for (var msgIndex = 0; msgIndex < numberOfMessageNeeded; msgIndex++) {
-            if (msgIds[msgIndex] === undefined) {
-                ch.send(savedDataInText.slice(2000 * msgIndex, 2000 * (msgIndex + 1)));
-                continue;
-            }
-            (_a = ch.messages.resolve(msgIds[msgIndex])) === null || _a === void 0 ? void 0 : _a.edit(savedDataInText.slice(2000 * msgIndex, 2000 * (msgIndex + 1)));
-        }
-        for (var msgIndexOnDiscord = numberOfMessageNeeded; msgIndexOnDiscord < msgIds.length; msgIndexOnDiscord++) {
-            (_b = ch.messages.resolve(msgIds[msgIndexOnDiscord])) === null || _b === void 0 ? void 0 : _b.delete();
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var escapedFileName, savedDataInText, savedDataInBuffer, ch, attachmentAsTarget;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        escapedFileName = escapeFileName(fileName);
+                        savedDataInText = JSON.stringify(data);
+                        savedDataInBuffer = Buffer.from(savedDataInText);
+                        ch = findFileTextChannel(client_1.default);
+                        return [4 /*yield*/, findAttachmentFromChannel(escapedFileName, ch)];
+                    case 1:
+                        attachmentAsTarget = _a.sent();
+                        console.info("saved: " + savedDataInText + " as " + escapedFileName);
+                        if (attachmentAsTarget !== undefined) {
+                            attachmentAsTarget.msg.delete();
+                        }
+                        ch.send(new discord_js_1.MessageAttachment(savedDataInBuffer, escapedFileName));
+                        return [2 /*return*/];
+                }
+            });
+        });
     }
 };
+function escapeFileName(fileName) {
+    return fileName.replace(/[\/\\]/g, "__");
+}
+function findAttachmentFromChannel(attachmentName, ch) {
+    return __awaiter(this, void 0, void 0, function () {
+        var messages, _i, _a, msg, data;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, ch.messages.fetch({ limit: 50 })];
+                case 1:
+                    messages = _b.sent();
+                    for (_i = 0, _a = messages.array(); _i < _a.length; _i++) {
+                        msg = _a[_i];
+                        data = msg.attachments.find(function (attachment) { return attachment.name === attachmentName; });
+                        if (data === undefined)
+                            continue;
+                        return [2 /*return*/, { attachmentInMsg: data, msg: msg }];
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 exports.default = helperAboutFiles;
 function ChIsTextCh(ch) {
     return ch.type === "text";
 }
-function findFileTextChannel(client, fileName) {
+function findFileTextChannel(client) {
     var _a;
-    var textCh = (_a = findFileVault(client)) === null || _a === void 0 ? void 0 : _a.channels.cache.find((function (channel) {
-        if (!ChIsTextCh(channel))
-            return false;
-        return (channel.name === fileName);
-    }));
+    var textCh = (_a = findFileVault(client)) === null || _a === void 0 ? void 0 : _a.channels.cache.find((function (channel) { return channel.name === "filevault"; }));
     if (textCh === undefined)
-        return undefined;
+        throw new Error("テキストチャンネルを取得できませんでした。");
     if (!ChIsTextCh(textCh))
-        return undefined;
+        throw new Error("取得したチャンネルがテキストチャンネルではありませんでした。");
     return textCh;
 }
 function findFileVault(client) {

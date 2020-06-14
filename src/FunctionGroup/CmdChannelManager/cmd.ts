@@ -47,11 +47,10 @@ export function show(msg:Message){
     );
 }
 
-export function react_add(msg:Message){
+export async function react_add(msg:Message){
             const cmd = msg.content.toLowerCase().replace(/\s+/g,"");
             if (cmd !== ">cmdcmadd" && cmd !== ">helloworld") return;
-            StandardDataManager.addCmdChannelId(msg.channel.id).then(
-                (result) => {
+            if ( await StandardDataManager.addCmdChannelId(msg.channel.id) === addCmdChannelIdState.alreadyadded) return;
             msg.channel.send(
                 embedMessageMaker(
                     `このチャンネルをコマンドチャンネルとして登録しました。`,
@@ -62,6 +61,4 @@ export function react_add(msg:Message){
                     embedMsgState.Success
                 )
             )
-        }
-    );
 }

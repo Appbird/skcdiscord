@@ -9,17 +9,17 @@ import BallonBurier from "../BallonBurier";
 import { converseWordsFollowingRules } from "./converseWordsFollowingRules";
 
 
-export function add(msg: Message, tokens: string[]): void {
+export async function add(msg: Message, tokens: string[]){
     const wordInformation = tokens.slice(2);
     const cmdFlagsChar = wordInformation.slice(1);
     const flagManager = new TargetWordFrags();
     const addedColumn = new TargetWordColumn(wordInformation[0]);
     
-    const savedTargetWordTable = SaveDataController.load().then(
-        savedTargetWordTable => {
+    const savedTargetWordTable = await SaveDataController.load()
     addedColumn.flags = flagManager.turnOn(cmdFlagsChar, msg.channel);
     addedColumn.usedWordForJudging = converseWordsFollowingRules(addedColumn.word, flagManager);
-    if (_.findIndex(savedTargetWordTable, row => row.usedWordForJudging === addedColumn.usedWordForJudging) !== -1) {
+    const isAlreadyAdded = _.findIndex(savedTargetWordTable, row => row.usedWordForJudging === addedColumn.usedWordForJudging) !== -1;
+    if (isAlreadyAdded) {
         helperAboutError.throwErrorToDiscord(msg.channel, "既に同じ単語が登録されています。");
         return;
     }
@@ -32,6 +32,7 @@ export function add(msg: Message, tokens: string[]): void {
             inline: false
         };
     });
-    msg.channel.send(embedMessageMaker(`ワード「${addedColumn.word}」がリストに追加されました。`, BallonBurier.realFuncName, "以下の属性が適用されています。", listOfFlags, addedColumn.registeredTimeStamp, embedMsgState.Success));
-    });
+    
+    if (!isAlreadyAdded)msg.channel.send(embedMessageMaker(`ワード「${addedColumn.word}」がリストに追加されました。`, BallonBurier.realFuncName, "以下の属性が適用されています。", listOfFlags, addedColumn.registeredTimeStamp, embedMsgState.Success));
+    
 }

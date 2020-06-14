@@ -62,7 +62,7 @@ var StandardDataManager = /** @class */ (function () {
         return "708688091556216894";
     };
     StandardDataManager.getToken = function () {
-        return releaseConfig_1.default ? process.env["BOT_TOKEN"] : fs_1.readFileSync("t.json", 'utf8');
+        return releaseConfig_1.default ? process.env["BOT_TOKEN"] : JSON.parse(fs_1.readFileSync("./database/t.json", 'utf8')).t;
     };
     StandardDataManager.getCmdChannelId = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -87,7 +87,7 @@ var StandardDataManager = /** @class */ (function () {
                     case 0: return [4 /*yield*/, StandardDataManager.getCmdChannelId()];
                     case 1:
                         cmdChannelId = _a.sent();
-                        if (cmdChannelId.findIndex(function (cmd) { return cmd === channelId; }) === -1)
+                        if (cmdChannelId.findIndex(function (ele) { return ele === channelId; }) !== -1)
                             return [2 /*return*/, addCmdChannelIdState.alreadyadded];
                         cmdChannelId.push(channelId);
                         StandardDataManager._save(cmdChannelId);

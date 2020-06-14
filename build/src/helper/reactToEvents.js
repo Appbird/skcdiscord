@@ -12,7 +12,7 @@ var allOfReact = [
         eventType: "message",
         processes: [function (msg) {
                 standardData_1.StandardDataManager.getCmdChannelId().then(function (cmdChannelId) {
-                    if (cmdChannelId.findIndex(function (id) { return id === msg.channel.id; }) && msg.content[0] === ">")
+                    if (cmdChannelId.findIndex(function (id) { return id === msg.channel.id; }) !== -1 && msg.content[0] === ">")
                         cmdExecutor_1.default(msg);
                 });
             }

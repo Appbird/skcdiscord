@@ -1,6 +1,5 @@
 import { TargetWordColumn } from "./TargetWordColumn";
 import helperAboutFiles from "../../../helper/programHelperFunctions/helperAboutFiles";
-import { deflate } from "zlib";
 
 
 const SaveDataController = {

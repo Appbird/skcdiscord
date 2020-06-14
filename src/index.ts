@@ -17,5 +17,4 @@ for (const reacts of allOfReact){
     )
 }
 
-
 client.login(StandardDataManager.getToken());
