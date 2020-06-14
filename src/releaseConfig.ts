@@ -1,2 +1,2 @@
-const release = false;
+const release = true;
 export default release;
