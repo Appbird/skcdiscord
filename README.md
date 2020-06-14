@@ -1,7 +1,7 @@
 # Project:SKcDiscord-Servant
 by Project.Appbird
 
-Discordのための多機能botです。
+Discordのための多機能botを作るためのフレームワーク(?)です。
 このbotは、とあるサーバーのために作成されたため、一般用途には向いていないと考えられます。
 ここには使用方法と振り返りの二つを書いています。
 
