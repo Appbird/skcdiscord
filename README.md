@@ -127,6 +127,7 @@ reactに代入されるのは`IReactBase<K>[]``(K extends keyof ClientEvents)`�
 ## help機能
 また、`>help`コマンドを用いて機能群の説明、`>[機能群] -h`フラグ付きコマンドを用いてその機能群内のcommandの説明を出力させることが可能です。
 以上のデータで入力されたdescriptionなどをもとにしてhelpを自動生成するため、helpの書式についてはあまり気にせずに開発することが出来ます。
+
 ![](https://i.gyazo.com/184dd5b1fc12673fadc1bbb4674b02e6.png)
 ![](https://i.gyazo.com/82481ad2d3b216a6da3fc3136465ead2.png)
 
