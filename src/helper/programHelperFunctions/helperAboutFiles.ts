@@ -1,6 +1,8 @@
 import client from "../../client";
 import { TextChannel,Channel, Client, MessageEmbed, MessageAttachment} from "discord.js";
 import fetch from "node-fetch";
+import { readFileSync } from "fs";
+import getEnvVariable from "./helperAboutVariable";
 const helperAboutFiles = {
     //CH: これバイナリとして保存できない？
     async fetchJSONDataFromDiscordDataBase(fileName:string){
@@ -51,5 +53,5 @@ function findFileTextChannel(client:Client):TextChannel{
 
 }
 function findFileVault(client:Client){
-    return client.guilds.resolve("708666232311775263");
+    return client.guilds.resolve(getEnvVariable("guildId"));
 }

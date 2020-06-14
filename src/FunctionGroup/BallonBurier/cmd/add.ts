@@ -1,5 +1,4 @@
 import { Message } from "discord.js";
-import _ from "lodash";
 import helperAboutError from "../../../helper/programHelperFunctions/helperAboutError";
 import { TargetWordColumn } from "../Base/TargetWordColumn";
 import SaveDataController from "../Base/SaveDataController";
@@ -18,7 +17,7 @@ export async function add(msg: Message, tokens: string[]){
     const savedTargetWordTable = await SaveDataController.load()
     addedColumn.flags = flagManager.turnOn(cmdFlagsChar, msg.channel);
     addedColumn.usedWordForJudging = converseWordsFollowingRules(addedColumn.word, flagManager);
-    const isAlreadyAdded = _.findIndex(savedTargetWordTable, row => row.usedWordForJudging === addedColumn.usedWordForJudging) !== -1;
+    const isAlreadyAdded = savedTargetWordTable.findIndex(row => row.usedWordForJudging === addedColumn.usedWordForJudging) !== -1;
     if (isAlreadyAdded) {
         helperAboutError.throwErrorToDiscord(msg.channel, "既に同じ単語が登録されています。");
         return;

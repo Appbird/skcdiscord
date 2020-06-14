@@ -13,4 +13,3 @@ export default interface IFunctionBase {
     realFuncName:string;
     description:string;
 }
-Promise.all

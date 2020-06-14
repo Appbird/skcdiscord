@@ -40,7 +40,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.add = void 0;
-var lodash_1 = __importDefault(require("lodash"));
 var helperAboutError_1 = __importDefault(require("../../../helper/programHelperFunctions/helperAboutError"));
 var TargetWordColumn_1 = require("../Base/TargetWordColumn");
 var SaveDataController_1 = __importDefault(require("../Base/SaveDataController"));
@@ -63,7 +62,7 @@ function add(msg, tokens) {
                     savedTargetWordTable = _a.sent();
                     addedColumn.flags = flagManager.turnOn(cmdFlagsChar, msg.channel);
                     addedColumn.usedWordForJudging = converseWordsFollowingRules_1.converseWordsFollowingRules(addedColumn.word, flagManager);
-                    isAlreadyAdded = lodash_1.default.findIndex(savedTargetWordTable, function (row) { return row.usedWordForJudging === addedColumn.usedWordForJudging; }) !== -1;
+                    isAlreadyAdded = savedTargetWordTable.findIndex(function (row) { return row.usedWordForJudging === addedColumn.usedWordForJudging; }) !== -1;
                     if (isAlreadyAdded) {
                         helperAboutError_1.default.throwErrorToDiscord(msg.channel, "既に同じ単語が登録されています。");
                         return [2 /*return*/];

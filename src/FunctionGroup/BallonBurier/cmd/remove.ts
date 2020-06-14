@@ -1,6 +1,5 @@
 import SaveDataController from "../Base/SaveDataController";
 import { Message } from "discord.js";
-import _ from "lodash";
 import helperAboutError from "../../../helper/programHelperFunctions/helperAboutError";
 import { embedMessageMaker, embedMsgState } from "../../../helper/embedMessageMaker";
 import BallonBurier from "../BallonBurier";
@@ -10,7 +9,7 @@ export function remove(msg:Message, tokens:string[]):void {
     SaveDataController.load().then(
         savedData => {
 
-    let indexWhereFound =_.findIndex(savedData,ele => ele.word === deletedWord)
+    let indexWhereFound =savedData.findIndex(ele => ele.word === deletedWord)
     if (indexWhereFound === -1 || deletedWord === "" || deletedWord === undefined) {
         helperAboutError.throwErrorToDiscord(msg.channel, "一致する単語が見つかりません。");
         return;

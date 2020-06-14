@@ -41,8 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StandardDataManager = exports.removeCmdChannelIdState = exports.addCmdChannelIdState = void 0;
 var helperAboutFiles_1 = __importDefault(require("../helper/programHelperFunctions/helperAboutFiles"));
-var releaseConfig_1 = __importDefault(require("../releaseConfig"));
-var fs_1 = require("fs");
 var addCmdChannelIdState;
 (function (addCmdChannelIdState) {
     addCmdChannelIdState[addCmdChannelIdState["success"] = 0] = "success";
@@ -58,12 +56,6 @@ var removeCmdChannelIdState;
 var StandardDataManager = /** @class */ (function () {
     function StandardDataManager() {
     }
-    StandardDataManager.getBotId = function () {
-        return "708688091556216894";
-    };
-    StandardDataManager.getToken = function () {
-        return releaseConfig_1.default ? process.env["BOT_TOKEN"] : JSON.parse(fs_1.readFileSync("./database/t.json", 'utf8')).t;
-    };
     StandardDataManager.getCmdChannelId = function () {
         return __awaiter(this, void 0, void 0, function () {
             var data;

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
-var lodash_1 = __importDefault(require("lodash"));
 var cmdExecutor_1 = __importDefault(require("./cmdExecutor"));
 var standardData_1 = require("../Data/standardData");
 var allOfReact = [
@@ -17,14 +16,6 @@ var allOfReact = [
                 });
             }
         ]
-        /* コマンドは"message"Reactとして設定する。
-        ちなみに、TypeScriptが双変性を禁ずる理由はここにある。
-        このとき、配列からこの要素にアクセスしていても、
-        その要素は静的解析からは上位型であるIReactProcessBox<keyof ClientEvents>としか認識されず、
-        IReactProcessBox<"message">とは決してならない。
-        ゆえに、他の上位型IReactProcessBox<keyof ClientEvents>の部分型としての操作を行ったとして
-        も静的解析には一切怒られない。
-        */
     }
 ];
 recollectReact(allOfReact);
@@ -42,7 +33,7 @@ function recollectReact(reactTable) {
  * 副作用あり。第一引数の変数を変更する。
 ***/
 function classifyEventReact(reactTable, react) {
-    var addedColumnIndex = lodash_1.default.findIndex(reactTable, function (element) { return element.eventType === react.eventType; });
+    var addedColumnIndex = reactTable.findIndex(function (element) { return element.eventType === react.eventType; });
     if (addedColumnIndex === -1)
         addedColumnIndex = reactTable.push({ eventType: react.eventType, processes: [] }) - 1;
     reactTable[addedColumnIndex].processes.push(react.process);

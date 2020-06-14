@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var SaveDataController_1 = __importDefault(require("./Base/SaveDataController"));
 var FragConversion_1 = require("./Base/FragConversion");
-var lodash_1 = __importDefault(require("lodash"));
 var embedMessageMaker_1 = require("../../helper/embedMessageMaker");
 var BallonBurier_1 = __importDefault(require("./BallonBurier"));
 var standardData_1 = require("../../Data/standardData");
@@ -18,7 +17,7 @@ function buryWord(msg) {
         if ((msg.content.toLowerCase().indexOf(">babu") === 0 && cmdChannelId.findIndex(function (ele) { return ele === msg.channel.id; }) === -1) || foundWord === "")
             return;
         msg.delete({ reason: BallonBurier_1.default.realFuncName + " > \u5BFE\u8C61\u3068\u306A\u308B\u30EF\u30FC\u30C9\u304C\u542B\u307E\u308C\u3066\u3044\u305F\u305F\u3081\u3002" });
-        var deleteCountIndex = lodash_1.default.findIndex(targetWordList, function (ele) { return ele.word === foundWord; });
+        var deleteCountIndex = targetWordList.findIndex(function (ele) { return ele.word === foundWord; });
         targetWordList[deleteCountIndex].timeOfBuried++;
         SaveDataController_1.default.save(targetWordList);
         if (idOfChannelSentLog === "")
@@ -34,7 +33,7 @@ exports.default = buryWord;
  * @return 対象を発見したときにはその対象を返し、何も発見できなかった時はWordを投げる。
  */
 function _detectWordInMsg(detectedStr, targetWordList) {
-    var converseList = lodash_1.default.entries(FragConversion_1.fragConverses);
+    var converseList = Object.entries(FragConversion_1.fragConverses);
     if (targetWordList === undefined)
         return "";
     for (var _i = 0, targetWordList_1 = targetWordList; _i < targetWordList_1.length; _i++) {

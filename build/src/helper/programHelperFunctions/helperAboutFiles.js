@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = __importDefault(require("../../client"));
 var discord_js_1 = require("discord.js");
 var node_fetch_1 = __importDefault(require("node-fetch"));
+var helperAboutVariable_1 = __importDefault(require("./helperAboutVariable"));
 var helperAboutFiles = {
     //CH: これバイナリとして保存できない？
     fetchJSONDataFromDiscordDataBase: function (fileName) {
@@ -134,5 +135,5 @@ function findFileTextChannel(client) {
     return textCh;
 }
 function findFileVault(client) {
-    return client.guilds.resolve("708666232311775263");
+    return client.guilds.resolve(helperAboutVariable_1.default("guildId"));
 }

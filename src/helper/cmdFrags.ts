@@ -1,5 +1,4 @@
 import helperAboutError from "./programHelperFunctions/helperAboutError";
-import _ from "lodash";
 import { Message, TextChannel, DMChannel, NewsChannel } from "discord.js";
 
 
@@ -34,7 +33,7 @@ export class cmdFlagManager{
                     `このコマンドはこれほど多くの引数は取りません。`);
                 continue;
             }
-            let definedCmdFlagIndex = _.findIndex(this.definedCmdFlags,element => element.cmdForFlag === judgedCmdFlag);
+            let definedCmdFlagIndex = this.definedCmdFlags.findIndex(element => element.cmdForFlag === judgedCmdFlag);
             if (definedCmdFlagIndex === -1){
                 helperAboutError.throwErrorToDiscord(channel,
                     `フラグ"${cmdFlag}"は存在しません。このフラグを無視して処理を続行します。`);

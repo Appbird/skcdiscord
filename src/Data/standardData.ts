@@ -1,6 +1,4 @@
 import helperAboutFiles from "../helper/programHelperFunctions/helperAboutFiles";
-import release from "../releaseConfig";
-import { readFileSync } from "fs";
 
 export enum addCmdChannelIdState{
     success,
@@ -13,12 +11,6 @@ export enum removeCmdChannelIdState{
     failed
 }
 export class StandardDataManager{
-    public static getBotId(){
-        return "708688091556216894";
-    }
-    public static getToken(){
-        return release ? process.env["BOT_TOKEN"]:JSON.parse(readFileSync("./database/t.json",'utf8')).t;
-    }
     
     public static async getCmdChannelId(){
         let data:{[key:string]:string[]} | undefined = await helperAboutFiles.fetchJSONDataFromDiscordDataBase("standard.json");
