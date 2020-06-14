@@ -18,6 +18,7 @@ https://scrapbox.io/minimumAppbirdlications/SKcDiscordServant
 		* node-fetch
 * Visual Studio Code
 * Heroku
+
 を用いました。
 
 ## feature:ファイル分離による機能ごとの関心分離
@@ -25,19 +26,24 @@ https://scrapbox.io/minimumAppbirdlications/SKcDiscordServant
 
 追加できる機能を以下の二種類に分類します。
 * command
+
 その名の通りコマンド機能。プレフィックス`>`から始まる構文をとるメッセージを受け取った時に発生するコールバック関数を指定します。
 
 * react
+
 その他すべての、特定のイベントの発生時に発火するような機能。たとえば、サーバーに入った時のコールバック関数や、プレフィックス`>`をとらない普通のメッセージを受け取ったときなどに発火するコールバック関数を定義することが出来ます。
 これらの機能を、一つのグループ(機能群)としてまとめ、ソースファイルを分離してプログラミングすることが可能になります。機能群に直接対応する型(インターフェース)は`IFunctionBase`になります。
 
 たとえば、2020/06/14現在で実装されている機能群としては以下の3つがあります。
 * BallonBurier
+
 省略形で`babu`。特定の単語を含むメッセージが投稿されたとき、そのメッセージを削除する機能を保有します。
 このページ上では一例としてbabuの動作状況のスクリーンショットが挙げられています。
 * CmdChannelManager
+
 コマンドを受け付けるチャンネルを設定する機能を保有します。
 * Ready
+
 コマンドを受け取った時、特定の文字列を返す機能を保有します。
 これらはそれぞれ複数のcommandとreactを所持しており、それぞれ関心ごとにファイルが分離されて定義されています。
 新たに機能群としてまとめ上げたときには、src/FunctionGroup/functionSet.ts内で定義されているエクスポート変数(`IFunctionBase[]`型)である`functionSet`に機能群(`IFunctionBase`)を追加することを忘れずに。そうしないと認識されません。
@@ -79,7 +85,7 @@ commandに直接対応するのは`ICommandBase`になります。
 	* `state:boolean`
 	フラグが立っているか否か
 この`ICmdFlag#state`はメソッド`cmdFlagManager#turnOn`を発火させた後だとユーザーのフラグの入力状況にそっているため、フラグの入力状況に応じて挙動を変更させることが可能になります。
-[https://i.gyazo.com/f7d74142f74bcecfae1bc9ac98e479cd.png]
+![IcommandFlag](https://i.gyazo.com/f7d74142f74bcecfae1bc9ac98e479cd.png)
 ### react
 直接ユーザーのメッセージに反応したいときなどはこちらを用います。
 `IReactBase<K extends keyof ClientEvents>`のプロパティは以下の通りです。
@@ -111,8 +117,8 @@ reactに代入されるのは`IReactBase<K>[]``(K extends keyof ClientEvents)`�
 ## help機能
 また、`>help`コマンドを用いて機能群の説明、`>[機能群] -h`フラグ付きコマンドを用いてその機能群内のcommandの説明を出力させることが可能です。
 以上のデータで入力されたdescriptionなどをもとにしてhelpを自動生成するため、helpの書式についてはあまり気にせずに開発することが出来ます。
-[https://i.gyazo.com/184dd5b1fc12673fadc1bbb4674b02e6.png]
-[https://i.gyazo.com/82481ad2d3b216a6da3fc3136465ead2.png]
+![](https://i.gyazo.com/184dd5b1fc12673fadc1bbb4674b02e6.png)
+![](https://i.gyazo.com/82481ad2d3b216a6da3fc3136465ead2.png)
 
 ## データの保存について
 このbotは、サービスHeroku上で動作することを想定して作成しています。
