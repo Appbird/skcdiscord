@@ -70,9 +70,13 @@ commandに直接対応するのは`ICommandBase`になります。
 ### commandのフラグ
 また、コマンドはフラグ(`-`から始まる引数)を取ることが出来ます。
 これを用いると、ユーザーによるコマンドの細やかな挙動の操作が可能になります。フラグに直接対応するような型は`ICmdFlag`(`./src/helper/cmdFlags`)になります。
-型`cmdFlagManager`のインスタンスオブジェクトとして`ICmdFlag[]`を定義するとより便利です。
+
+型`cmdFlagManager`のインスタンスオブジェクトとして`ICmdFlag[]`を定義するとより便利です。[
+
 フラグとされる入力文字列を受け取ってそのうちフラグとして適切な文字列だけを出力しつつ、`ICmdFlag#state`のフラグの状態を変更させる`cmdFlagManager`のメソッド`turnOn(cmdFlagsChar:String[],channel:TextChannel|DMChannel|NewsChannel):string[]`を用いることができるためです。
+
 `cmdFlagManager`を継承して`cmdFlagManager#definedCmdFlags:ICmdFlag[]`を改めて定義する手法がおすすめです。(ここの設計はあんまりよくないと思うので、ここの設計はいつか変えたい。)
+
 `ICmdFlag`は以下のプロパティを取ります。
 	* `flagTitle:string`
 	フラグ名
@@ -85,9 +89,11 @@ commandに直接対応するのは`ICommandBase`になります。
 	* `state:boolean`
 	フラグが立っているか否か
 この`ICmdFlag#state`はメソッド`cmdFlagManager#turnOn`を発火させた後だとユーザーのフラグの入力状況にそっているため、フラグの入力状況に応じて挙動を変更させることが可能になります。
+
 ![IcommandFlag](https://i.gyazo.com/f7d74142f74bcecfae1bc9ac98e479cd.png)
 ### react
 直接ユーザーのメッセージに反応したいときなどはこちらを用います。
+
 `IReactBase<K extends keyof ClientEvents>`のプロパティは以下の通りです。
 	* `eventType:K`
 	ここで指定したイベントが発生したときに、processは呼び出されます。
@@ -95,7 +101,9 @@ commandに直接対応するのは`ICommandBase`になります。
 	このreactの正式名称
 	* `process:(...args:ClientEvents[K]): void`
 	呼び出されるコールバック関数。
+
 なお、型の仕様上、reactを定義するときは、eventTypeごとにジェネリックを分けてreactを定義することを推奨します。ここは自動的に型推論されるようにしたかったのだがどうにもわからなかった。
+
 [https://i.gyazo.com/c1ebb66cd3be8d6698eae76f75c2ccb5.png]
 ### IFunctionBase
 この型が直接機能群に対応します。新たに機能群としてまとめ上げたときには、src/FunctionGroup/functionSet.ts内で定義されているエクスポート変数(`IFunctionBase[]`型)である`functionSet`に機能群(`IFunctionBase`)を追加することを忘れずに。そうしないと認識されません。
@@ -109,9 +117,11 @@ commandに直接対応するのは`ICommandBase`になります。
 	実際の機能群の名前。
 	* `description:string`
 	機能群の説明。
+
 ここまで定義してようやく一つの機能群として利用可能になります。
 
 また、ここの実装のためにコンパイラには型の双変性を許容させています。
+
 reactに代入されるのは`IReactBase<K>[]``(K extends keyof ClientEvents)`である一方、代入先は`IReactBase<keyof ClientEvents>[]`という複合型であるため、型の双変性を許容しないと代入ができず、コードが難解になる可能性が考えられたため、今回はこのまま許容することにしました。
 
 ## help機能
@@ -122,7 +132,9 @@ reactに代入されるのは`IReactBase<K>[]``(K extends keyof ClientEvents)`�
 
 ## データの保存について
 このbotは、サービスHeroku上で動作することを想定して作成しています。
+
 そのため、データベースの機能を利用して保存する手法も考えられましたが、今回はDiscord上の特定のテキストチャンネルを保管庫とする手法を取りました。
+
 テキストチャンネルとして`filevault`チャンネルを作成することで、そのテキストチャンネル中にjsonデータを添付したメッセージを保有します。
 こういった、データの読み込み書き込みについては`./src/helper/programHelperFunctions/helperAboutFile.ts`にて定義を行っています。
 
@@ -135,6 +147,7 @@ discord.jsには2020/6/14現在メッセージの添付ファイルを直接書�
 * `guildId`をキーとした`filevault`テキストチャンネルが存在するサーバーのid
 * `botId`をキーとしたbotのユーザーid
 ただし、`./envVariables.json`が存在した場合には、プログラムはこのjsonファイルを解釈してそれを環境変数として扱います。
+
 環境変数を扱うような操作をする際は、`./src/helper/programHelperFunctions/helperAboutVariables.ts`の`getEnvVariable(name:string):string`関数を用いると楽です。
 ## エラーを投げる
 エラーが発生したとき、ユーザー側に知らせる際には`./src/helper/programHelperFunctions/helperAboutError.ts`の`helperAboutError.throwErrorToDiscord(targetChannel:TextChannel|DMChannel|NewsChannel,content:string,description?:string,fields?:IEmbedMessageField[])`関数を用いると楽です。
