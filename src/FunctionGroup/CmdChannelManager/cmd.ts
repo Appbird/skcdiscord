@@ -3,7 +3,6 @@ import { Message } from "discord.js";
 import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
 import CmdChannelManager from "./CmdChannelManager";
 import client from "../../client";
-import helperAboutError from "../../helper/programHelperFunctions/helperAboutError";
 
 export function remove(msg:Message){
 

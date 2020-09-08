@@ -1,7 +1,6 @@
 "use strict";
 
 import ICommandBase from "../../Base/ICommandBase";
-import { Message } from "discord.js";
 import IFunctionBase from "../../Base/IFunctionBase";
 import IReactBase from "../../Base/IReactBase";
 
@@ -23,6 +22,7 @@ let rt:IReactBase<"message">[] = [{
  * Ready function
  * https://scrapbox.io/minimumAppbirdlications/SKcDiscordServant%2FReady
  */
+
 let Ready:IFunctionBase = {
     functionName: "ready",
     realFuncName: "READY",

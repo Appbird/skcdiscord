@@ -1,12 +1,15 @@
 import IFunctionBase from "../../Base/IFunctionBase";
 import ICommandBase from "../../Base/ICommandBase";
 import IReactBase from "../../Base/IReactBase";
+
 import { remove } from "./cmd/remove";
 import show from "./cmd/show";
 import { add } from "./cmd/add";
 import buryWord from "./react";
-import TargetWordFragManager from "./Base/TargetWordFragManager";
 import reactLog from "./cmd/reactLog";
+
+import TargetWordFragManager from "./Base/TargetWordFragManager";
+
 
 let cmd:ICommandBase[] = [
     {

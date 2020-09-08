@@ -1,10 +1,11 @@
 import ICommandBase from "../../Base/ICommandBase";
-import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
 import IFunctionBase from "../../Base/IFunctionBase";
-import { StandardDataManager } from "../../Data/standardData";
-import client from "../../client";
 import IReactBase from "../../Base/IReactBase";
+
 import * as commandFunctions from "./cmd";
+
+import { embedMessageMaker, embedMsgState } from "../../helper/embedMessageMaker";
+import { StandardDataManager } from "../../Data/standardData";
 
 const cmd:ICommandBase[] = [
     {commandTitle:"add",
