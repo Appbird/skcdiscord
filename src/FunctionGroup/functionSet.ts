@@ -2,12 +2,13 @@
 
 import IFunctionBase from "../Base/IFunctionBase";
 import Ready from "./Ready/Ready";
-import BallonBurier from "./BallonBurier/BallonBurier";
+import { KSSRsNotifer } from "./KSSRsMentioner/KSSRsNotifier";
 import CmdChannelManager from "./CmdChannelManager/CmdChannelManager";
 
 const functionSet: IFunctionBase[] = [
     Ready,
-    BallonBurier,
-    CmdChannelManager
+    /*BallonBurier,*/
+    CmdChannelManager,
+    KSSRsNotifer
 ]
 export default functionSet;

@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.devideIntoTokens = void 0;
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
 var helperAboutError_1 = __importDefault(require("./programHelperFunctions/helperAboutError"));
 var embedMessageMaker_1 = require("./embedMessageMaker");

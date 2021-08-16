@@ -39,7 +39,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StandardDataManager = exports.removeCmdChannelIdState = exports.addCmdChannelIdState = void 0;
 var helperAboutFiles_1 = __importDefault(require("../helper/programHelperFunctions/helperAboutFiles"));
 var addCmdChannelIdState;
 (function (addCmdChannelIdState) {

@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = void 0;
 var SaveDataController_1 = __importDefault(require("../Base/SaveDataController"));
 var helperAboutError_1 = __importDefault(require("../../../helper/programHelperFunctions/helperAboutError"));
 var embedMessageMaker_1 = require("../../../helper/embedMessageMaker");

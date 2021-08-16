@@ -3,17 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.giveArgsOfHelpEmbedMsgAboutCmd = exports.giveArgsOfHelpEmbedMsgAboutFunction = void 0;
 var functionSet_1 = __importDefault(require("../FunctionGroup/functionSet"));
 var embedMessageMaker_1 = require("./embedMessageMaker");
 function giveArgsOfHelpEmbedMsgAboutFunction() {
-    return ["\u6A5F\u80FD\u7FA4", "Helper", "", functionSet_1.default.map(function (ele) {
+    return ["\u6A5F\u80FD\u7FA4", "Helper", "",
+        functionSet_1.default.map(function (ele) {
             return {
                 name: ele.functionName + "(" + ele.realFuncName + ")",
                 value: ele.description,
                 inline: false
             };
-        }), new Date(), embedMessageMaker_1.embedMsgState.Normal];
+        }),
+        new Date(), embedMessageMaker_1.embedMsgState.Normal];
 }
 exports.giveArgsOfHelpEmbedMsgAboutFunction = giveArgsOfHelpEmbedMsgAboutFunction;
 function giveArgsOfHelpEmbedMsgAboutCmd(functionIndex) {

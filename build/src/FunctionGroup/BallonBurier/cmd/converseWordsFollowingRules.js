@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.converseWordsFollowingRules = void 0;
 var FragConversion_1 = require("../Base/FragConversion");
 function converseWordsFollowingRules(str, flagManger) {
     var result = str;

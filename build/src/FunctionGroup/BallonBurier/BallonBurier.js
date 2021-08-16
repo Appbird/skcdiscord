@@ -7,8 +7,8 @@ var remove_1 = require("./cmd/remove");
 var show_1 = __importDefault(require("./cmd/show"));
 var add_1 = require("./cmd/add");
 var react_1 = __importDefault(require("./react"));
-var TargetWordFragManager_1 = __importDefault(require("./Base/TargetWordFragManager"));
 var reactLog_1 = __importDefault(require("./cmd/reactLog"));
+var TargetWordFragManager_1 = __importDefault(require("./Base/TargetWordFragManager"));
 var cmd = [
     {
         commandTitle: "add",

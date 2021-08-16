@@ -39,7 +39,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.add = void 0;
 var helperAboutError_1 = __importDefault(require("../../../helper/programHelperFunctions/helperAboutError"));
 var TargetWordColumn_1 = require("../Base/TargetWordColumn");
 var SaveDataController_1 = __importDefault(require("../Base/SaveDataController"));

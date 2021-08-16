@@ -10,8 +10,8 @@ var BallonBurier_1 = __importDefault(require("./BallonBurier"));
 var standardData_1 = require("../../Data/standardData");
 function buryWord(msg) {
     Promise.all([SaveDataController_1.default.load(), SaveDataController_1.default.configLoad(), standardData_1.StandardDataManager.getCmdChannelId()]).then(function (_a) {
-        var _b;
         var targetWordList = _a[0], idOfChannelWhichItOutputReactLogTo = _a[1].idOfChannelWhichItOutputReactLogTo, cmdChannelId = _a[2];
+        var _b;
         var idOfChannelSentLog = idOfChannelWhichItOutputReactLogTo;
         var foundWord = _detectWordInMsg(msg.content, targetWordList);
         if ((msg.content.toLowerCase().indexOf(">babu") === 0 && cmdChannelId.findIndex(function (ele) { return ele === msg.channel.id; }) === -1) || foundWord === "")

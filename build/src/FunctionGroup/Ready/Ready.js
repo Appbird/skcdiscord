@@ -4,7 +4,8 @@ var cmd = [
     { commandTitle: ".",
         numberOfTokenRequired: 2,
         description: "文字列`OK> \\n 3 2 1 GO!>`を特定のチャンネルにメッセージとして投稿する。",
-        argsForDescription: [], process: function (msg) { msg.channel.send("OK > \n 3,2,1 GO! >"); }
+        argsForDescription: [],
+        process: function (msg) { msg.channel.send("OK > \n 3,2,1 GO! >"); }
     }
 ];
 var rt = [{

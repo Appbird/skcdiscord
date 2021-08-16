@@ -39,7 +39,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.react_add = exports.show = exports.remove = void 0;
 var standardData_1 = require("../../Data/standardData");
 var embedMessageMaker_1 = require("../../helper/embedMessageMaker");
 var CmdChannelManager_1 = __importDefault(require("./CmdChannelManager"));
