@@ -107,7 +107,7 @@ function kssrs_roledepriver(msg) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 3, , 4]);
                     arg = msg.content.split(" ").slice(2).join(" ");
                     tokenArray = arg.replace(/\s*\/\s*/g, "/").split("/");
                     roleName_1 = tokenArray[0] + "/" + tokenArray[1];
@@ -123,12 +123,15 @@ function kssrs_roledepriver(msg) {
                     return [4 /*yield*/, msg.member.roles.remove(role)];
                 case 1:
                     _a.sent();
-                    return [3 /*break*/, 3];
+                    return [4 /*yield*/, msg.channel.send("Responder deprives " + msg.author.username + " of the Role " + role.name)];
                 case 2:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
                     err_2 = _a.sent();
                     helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", err_2.message + ("(From " + msg.author.username + ")"));
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });

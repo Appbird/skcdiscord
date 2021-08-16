@@ -64,6 +64,8 @@ export async function kssrs_roledepriver(msg:Message){
             return
         }
         await msg.member.roles.remove(role)
+        await msg.channel.send(`Responder deprives ${msg.author.username} of the Role ${role.name}`)
+      
     }catch(err){
         helperAboutError.throwErrorToDiscord(msg.channel,"An Error has been Occured.",err.message + `(From ${msg.author.username})`)
     }
