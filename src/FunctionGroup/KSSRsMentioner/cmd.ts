@@ -7,7 +7,7 @@ import { APIAdministrator, IItemOfResolveTableToName } from "./APICaller";
 export async function kssrs_rolegiver(msg:Message){
     try {
         const arg = msg.content.split(" ").slice(2).join(" ")
-        const tokenArray = arg.split("/")
+        const tokenArray = arg.replace(/\s*\/\s*/g,"/").split("/")
         const gamemode = `${tokenArray[0]}/${tokenArray[1]}`
         const gamemodeRole = msg.guild?.roles.cache.find(role => role.name === `${gamemode}`)
         if (gamemodeRole !== undefined) {
@@ -52,7 +52,7 @@ export async function kssrs_rolegiver(msg:Message){
 export async function kssrs_roledepriver(msg:Message){
     try{
         const arg = msg.content.split(" ").slice(2).join(" ")
-        const tokenArray = arg.split("/")
+        const tokenArray = arg.replace(/\s*\/\s*/g,"/").split("/")
         const roleName = `${tokenArray[0]}/${tokenArray[1]}`
         if (msg.member === null){
             helperAboutError.throwErrorToDiscord(msg.channel,"An Error has been Occured.",`The messsage from **${msg.author.username}** of member is not found. (From ${msg.author.username})`)
@@ -82,7 +82,6 @@ export async function giveKSSRsGameTitleList(msg:Message){
 export async function giveKSSRsGameModeList(msg:Message){
     try{
         const arg = msg.content.split(" ").slice(2).join(" ")
-        const tokenArray = arg.split("/")
         const apiCaller = new APIAdministrator()
         const gameSystemCollection = (await apiCaller.access("list_gameSystems",{})).result as IItemOfResolveTableToName[]
         const requestedGameSystemName = arg;

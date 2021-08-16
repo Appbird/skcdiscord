@@ -51,7 +51,7 @@ function kssrs_rolegiver(msg) {
                 case 0:
                     _c.trys.push([0, 5, , 6]);
                     arg = msg.content.split(" ").slice(2).join(" ");
-                    tokenArray = arg.split("/");
+                    tokenArray = arg.replace(/\s*\/\s*/g, "/").split("/");
                     gamemode_1 = tokenArray[0] + "/" + tokenArray[1];
                     gamemodeRole = (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.roles.cache.find(function (role) { return role.name === "" + gamemode_1; });
                     if (gamemodeRole !== undefined) {
@@ -109,7 +109,7 @@ function kssrs_roledepriver(msg) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     arg = msg.content.split(" ").slice(2).join(" ");
-                    tokenArray = arg.split("/");
+                    tokenArray = arg.replace(/\s*\/\s*/g, "/").split("/");
                     roleName_1 = tokenArray[0] + "/" + tokenArray[1];
                     if (msg.member === null) {
                         helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The messsage from **" + msg.author.username + "** of member is not found. (From " + msg.author.username + ")");
@@ -159,13 +159,12 @@ function giveKSSRsGameTitleList(msg) {
 exports.giveKSSRsGameTitleList = giveKSSRsGameTitleList;
 function giveKSSRsGameModeList(msg) {
     return __awaiter(this, void 0, void 0, function () {
-        var arg, tokenArray, apiCaller, gameSystemCollection, requestedGameSystemName_2, requestedGameSystem, gameModeCollection, err_4;
+        var arg, apiCaller, gameSystemCollection, requestedGameSystemName_2, requestedGameSystem, gameModeCollection, err_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
                     arg = msg.content.split(" ").slice(2).join(" ");
-                    tokenArray = arg.split("/");
                     apiCaller = new APICaller_1.APIAdministrator();
                     return [4 /*yield*/, apiCaller.access("list_gameSystems", {})];
                 case 1:
