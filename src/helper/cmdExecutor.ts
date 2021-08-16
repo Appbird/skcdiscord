@@ -4,7 +4,6 @@ import helperAboutError from "./programHelperFunctions/helperAboutError";
 import { embedMessageMaker } from "./embedMessageMaker";
 import { giveArgsOfHelpEmbedMsgAboutFunction, giveArgsOfHelpEmbedMsgAboutCmd } from "./giveArgsOfHelpEmbedMsg";
 
-
 export default function executeCmd(msg:Message):void{
 
     //コマンドとして成立しているか
@@ -25,7 +24,7 @@ export default function executeCmd(msg:Message):void{
     }
 
     //機能が存在するか
-    let usedFunctionIndex = functionSet.findIndex(func => tokenArray[0] === func.functionName);
+    let usedFunctionIndex = functionSet.findIndex(func => tokenArray[0] === func.functionName.toLowerCase());
     if (usedFunctionIndex === -1) {
         helperAboutError.throwErrorToDiscord(msg.channel,"指定された機能は存在しません","\`-h\`フラグを用いて存在する機能についてざっくり調べることが出来ます。");
         return;
@@ -38,7 +37,7 @@ export default function executeCmd(msg:Message):void{
             return;
         }
 
-    let selectedCmdIndex = functionSet[usedFunctionIndex].commands.findIndex(cmd => cmd.commandTitle===tokenArray[1]);
+    let selectedCmdIndex = functionSet[usedFunctionIndex].commands.findIndex(cmd => cmd.commandTitle.toLowerCase()===tokenArray[1]);
     if (selectedCmdIndex === -1) {
         helperAboutError.throwErrorToDiscord(msg.channel,"そのコマンドは、指定された機能中に存在しません。",`\`-h\`フラグを用いてこのコマンドについて調べることが出来ます。`);
     return;

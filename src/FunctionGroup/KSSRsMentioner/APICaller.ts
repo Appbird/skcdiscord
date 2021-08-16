@@ -1,13 +1,14 @@
+import fetch from "node-fetch"
 export class APIAdministrator {
     private origin: string;
-    constructor(origin: string = `${location.protocol}//${location.host}`) {
+    constructor(origin: string = "https://kss-recorders.web.app") {
         this.origin = origin;
     }
     async access(functionName: string, requiredObj: any): Promise<any> {
         const convertedName = functionName.replace(/\_/g, "/");
         
         const response = await fetch(`${this.origin}/api/${convertedName}`, {
-            method: "POST",
+            method:"POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requiredObj)
         });
@@ -33,4 +34,5 @@ export interface IItemOfResolveTableToName {
     JDescription?:string;
     English: string;
     EDescription?:string;
+    DiscordRoleID?:string;
 }

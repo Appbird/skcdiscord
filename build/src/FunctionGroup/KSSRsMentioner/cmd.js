@@ -40,15 +40,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var helperAboutError_1 = __importDefault(require("../../helper/programHelperFunctions/helperAboutError"));
+var helperAboutVariable_1 = __importDefault(require("../../helper/programHelperFunctions/helperAboutVariable"));
 var APICaller_1 = require("./APICaller");
-function kssrs_rolegiver(msg, tokenArray) {
+function kssrs_rolegiver(msg) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var gamemode_1, gamemodeRole, apiCaller, gameSystemCollection, _b, requestedGameSystemName_1, requestedGameModeName_1, requestedGameSystem, requestedGameMode, _c, _d, err_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var arg, tokenArray, gamemode_1, gamemodeRole, apiCaller, gameSystemCollection, _b, requestedGameSystemName_1, requestedGameModeName_1, requestedGameSystem, requestedGameMode, newRole, err_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _e.trys.push([0, 4, , 5]);
+                    _c.trys.push([0, 5, , 6]);
+                    arg = msg.content.split(" ").slice(2).join(" ");
+                    tokenArray = arg.split("/");
                     gamemode_1 = tokenArray[0] + "/" + tokenArray[1];
                     gamemodeRole = (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.roles.cache.find(function (role) { return role.name === "" + gamemode_1; });
                     if (gamemodeRole !== undefined) {
@@ -59,58 +62,62 @@ function kssrs_rolegiver(msg, tokenArray) {
                         giveRole(msg.channel, gamemodeRole, msg.member);
                         return [2 /*return*/];
                     }
-                    apiCaller = new APICaller_1.APIAdministrator("https://kss-recorders.web.app/");
+                    apiCaller = new APICaller_1.APIAdministrator();
                     return [4 /*yield*/, apiCaller.access("list_gameSystems", {})];
                 case 1:
-                    gameSystemCollection = (_e.sent()).result;
+                    gameSystemCollection = (_c.sent()).result;
                     _b = [tokenArray[0], tokenArray[1]], requestedGameSystemName_1 = _b[0], requestedGameModeName_1 = _b[1];
                     requestedGameSystem = gameSystemCollection.find(function (gameSystem) { return gameSystem.English === requestedGameSystemName_1; });
                     if (requestedGameSystem === undefined) {
-                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The title " + requestedGameSystemName_1 + " is not found. (From " + msg.author.username + ")");
+                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The title **" + requestedGameSystemName_1 + "** is not found. (From " + msg.author.username + ")");
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, apiCaller.access("list_gameModes", { gameSystemEnv: { gameSystemID: requestedGameSystem.id } })];
                 case 2:
-                    requestedGameMode = (_e.sent()).result.find(function (tgamemode) { return tgamemode.English === requestedGameModeName_1; });
+                    requestedGameMode = (_c.sent()).result.find(function (tgamemode) { return tgamemode.English === requestedGameModeName_1; });
                     if (requestedGameMode === undefined) {
-                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The mode " + requestedGameModeName_1 + " is not found. (From " + msg.author.username + ")");
+                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The mode **" + requestedGameModeName_1 + "** is not found. (From " + msg.author.username + ")");
                         return [2 /*return*/];
                     }
                     if (msg.guild === null || msg.member === null) {
                         helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The guild or member is not found. (From " + msg.author.username + ")");
                         return [2 /*return*/];
                     }
-                    _c = giveRole;
-                    _d = [msg.channel];
-                    return [4 /*yield*/, msg.guild.roles.create({ data: { name: gamemode_1, color: "DARK_BLUE", mentionable: true } })];
+                    return [4 /*yield*/, msg.guild.roles.create({ data: { name: gamemode_1, color: "GREEN", mentionable: true } })];
                 case 3:
-                    _c.apply(void 0, _d.concat([_e.sent(), msg.member]));
-                    return [3 /*break*/, 5];
+                    newRole = _c.sent();
+                    giveRole(msg.channel, newRole, msg.member);
+                    return [4 /*yield*/, apiCaller.access("addDiscordRoleID", { gameSystemEnv: { gameSystemID: requestedGameSystem.id, gameModeID: requestedGameMode.id }, id: newRole.id, token: helperAboutVariable_1.default("KSSRs_TOKEN") })];
                 case 4:
-                    err_1 = _e.sent();
+                    _c.sent();
+                    return [3 /*break*/, 6];
+                case 5:
+                    err_1 = _c.sent();
                     helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", err_1.message + (" (From " + msg.author.username + ")"));
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });
 }
 exports.kssrs_rolegiver = kssrs_rolegiver;
-function kssrs_roledepriver(msg, tokenArray) {
+function kssrs_roledepriver(msg) {
     return __awaiter(this, void 0, void 0, function () {
-        var roleName_1, role, err_2;
+        var arg, tokenArray, roleName_1, role, err_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
+                    arg = msg.content.split(" ").slice(2).join(" ");
+                    tokenArray = arg.split("/");
                     roleName_1 = tokenArray[0] + "/" + tokenArray[1];
                     if (msg.member === null) {
-                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The messsage from " + msg.author.username + " of member is not found. (From " + msg.author.username + ")");
+                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The messsage from **" + msg.author.username + "** of member is not found. (From " + msg.author.username + ")");
                         return [2 /*return*/];
                     }
                     role = msg.member.roles.cache.find(function (role) { return role.name === roleName_1; });
                     if (role === undefined) {
-                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "Role " + roleName_1 + " is not found. (From " + msg.author.username + ")");
+                        helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "Role **" + roleName_1 + "** is not found. (From " + msg.author.username + ")");
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, msg.member.roles.remove(role)];
@@ -127,14 +134,14 @@ function kssrs_roledepriver(msg, tokenArray) {
     });
 }
 exports.kssrs_roledepriver = kssrs_roledepriver;
-function giveKSSRsGameTitleList(msg, tokenArray) {
+function giveKSSRsGameTitleList(msg) {
     return __awaiter(this, void 0, void 0, function () {
         var apiCaller, gameSystemCollection, err_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    apiCaller = new APICaller_1.APIAdministrator("https://kss-recorders.web.app/");
+                    apiCaller = new APICaller_1.APIAdministrator();
                     return [4 /*yield*/, apiCaller.access("list_gameSystems", {})];
                 case 1:
                     gameSystemCollection = (_a.sent()).result;
@@ -150,18 +157,20 @@ function giveKSSRsGameTitleList(msg, tokenArray) {
     });
 }
 exports.giveKSSRsGameTitleList = giveKSSRsGameTitleList;
-function giveKSSRsGameModeList(msg, tokenArray) {
+function giveKSSRsGameModeList(msg) {
     return __awaiter(this, void 0, void 0, function () {
-        var apiCaller, gameSystemCollection, requestedGameSystemName_2, requestedGameSystem, gameModeCollection, err_4;
+        var arg, tokenArray, apiCaller, gameSystemCollection, requestedGameSystemName_2, requestedGameSystem, gameModeCollection, err_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    apiCaller = new APICaller_1.APIAdministrator("https://kss-recorders.web.app/");
+                    arg = msg.content.split(" ").slice(2).join(" ");
+                    tokenArray = arg.split("/");
+                    apiCaller = new APICaller_1.APIAdministrator();
                     return [4 /*yield*/, apiCaller.access("list_gameSystems", {})];
                 case 1:
                     gameSystemCollection = (_a.sent()).result;
-                    requestedGameSystemName_2 = tokenArray[0];
+                    requestedGameSystemName_2 = arg;
                     requestedGameSystem = gameSystemCollection.find(function (gameSystem) { return gameSystem.English === requestedGameSystemName_2; });
                     if (requestedGameSystem === undefined) {
                         helperAboutError_1.default.throwErrorToDiscord(msg.channel, "An Error has been Occured.", "The title " + requestedGameSystemName_2 + " is not found. (From " + msg.author.username + ")");
@@ -189,7 +198,7 @@ function giveRole(channel, role, member) {
                 case 0: return [4 /*yield*/, member.roles.add(role)];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, channel.send("Role " + role.name + " is given to " + member.displayName + ".")];
+                    return [4 /*yield*/, channel.send("Role **" + role.name + "** is given to " + member.displayName + ".")];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
